@@ -55,8 +55,6 @@ The returned token is _bearer_ token (defined in [RFC6750](http://tools.ietf.org
     Host: example.com
     Authorization: Bearer mF_9.B5f-4.1JqM
 
-Many libraries implements OAuth 2.0, if you want to use EmberJS, the [SimpleAuth library](https://github.com/simplabs/ember-simple-auth) is fully functional.
-
 ### Successfull response
 
 * **access_token:** The token (string)
@@ -229,13 +227,13 @@ A single Theater object with all its details
 
 # Group Stage
 
-## Theater Collection [/theater/{theater_id}]
+## Stage Collection [/theater/{theater_id}/stages]
 Collection of all Stages of a theater
 
 + Parameters
     + theater_id (required, number, `1`) ... Numeric `id` of the Theater to perform action with
 
-### List all Theaters [GET]
+### List all Stages of a Theater [GET]
 
 + Response 200 (application/json)
 

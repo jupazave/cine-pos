@@ -1,0 +1,318 @@
+FORMAT: 1A
+HOST: http://localhost/api/v1
+
+# Escena Descubierta
+
+Escena Descubierta implements REST API using JSON.
+API will allow external apps (like JS frameworks) to interact with Escena Descubierta.
+
+        
+# HTTP Response Codes
+
+The API can answer with the following HTTP codes. Only 20x codes are successfull responses. 40x and 50x responses are error responses and the API consumer must deal with them.
+
+## Success responses
+
+<table>
+<tr><td>200 OK</td><td>The request was successful.</td></tr>
+<tr><td>201 Created</td><td>The request was successful and a new resource was created.</td></tr>
+<tr><td>202 Accepted</td><td>Asynchrnous task. Job resource is returned.</td></tr>
+<tr><td>204 No Content</td><td>The request was successful but there is nothing to return. Usually response of DELETE requests.</td></tr>
+</table>
+
+## Error responses
+
+<table>
+<tr><td>400 Bad Request</td><td>The request was invalid. Usually caused by invalid input data (missing arguments, invalid arguments values, etc.). Cause of error is described in response.</td></tr>
+<tr><td>401 Unauthorized</td><td>Authentication failed.</td></tr>
+<tr><td>403 Forbidden</td><td>You don't have access to resource.</td></tr>
+<tr><td>404 Not Found</td><td>You're asking for something that doesn't exist.</td></tr>
+<tr><td>500 Internal Server Error</td><td>Something went wrong. We are sorry, it is our fault and we will make our best to fix it!</td></tr>
+<tr><td>503 Temporary Unavailable</td><td>This response is typically returned when system is under maintenance. Maintenance reason and expected maintenance ent time are also returned in response. </td></tr>
+</table>
+
+
+# Authentication
+
+All requests, except `[POST] /api/v1/users/sign_in`, requires to be authenticated.
+
+An unauthorized request receives a `401` response with the following body:
+
+    {
+        "error": "unauthorized",
+        "error_description": "This request needs a valid authorization token"
+    }
+
+# Group Sign in
+
+### POST /sign_in
+
+The sign in process is compliant with [RFC 6749 (OAuth 2.0)](http://tools.ietf.org/html/rfc6749), in particular with _4.3 "Resource Owner Password Credentials Grant"._ The caller must provide username and password and the API will return the access token (see [RFC 6749, section 5.1 "Successful Response"](http://tools.ietf.org/html/rfc6749#section-5.1)) or an error if something goes bad (see [RFC 6749, section 5.2 "Error Response"](http://tools.ietf.org/html/rfc6749#section-5.1))
+
+The returned token is _bearer_ token (defined in [RFC6750](http://tools.ietf.org/html/rfc6750)) and it must be used to authenticate the client in every subsequent request, including the token in the request header:
+
+    GET /resource/1 HTTP/1.1
+    Host: example.com
+    Authorization: Bearer mF_9.B5f-4.1JqM
+
+Many libraries implements OAuth 2.0, if you want to use EmberJS, the [SimpleAuth library](https://github.com/simplabs/ember-simple-auth) is fully functional.
+
+### Successfull response
+
+* **access_token:** The token (string)
+* **token_type:** The token type, described in [RFC 6749, section 7.1 "Access Token Types"](http://tools.ietf.org/html/rfc6749#section-7.1). Actually only **bearer**
+* **expires_in:** [optional] The token validity (in seconds). The default validity is 7 days (604800 seconds)
+
+### Error response
+
+* **error:** If the response code is different from 20x, this field contains the error message. See [RFC 6749, section 5.2 "Error Response"](http://tools.ietf.org/html/rfc6749#section-5.2) for details
+* **error_description:** [optional] A human-readable error message explaining what happened
+* **error_uri:** [optional] The URI of a web page containing full description of the error and possible fixes
+
+Error responses are compliant with [RFC 6749, section 5.2 "Error response"](http://tools.ietf.org/html/rfc6749#section-5.2).
+These are the possible values of the _error_ field and their meaning:
+
+* **invalid_request:** The request is missing a required parameter, includes an unsupported parameter value (other than grant type), repeats a parameter, includes multiple credentials, utilizes more than one mechanism for authenticating the client, or is otherwise malformed.
+* **invalid_client:** The provided credentials ( _username_ and _password_ ) are invalid or wrong. The client can't be authorized.
+
++ Request (application/json)
+
+        {
+            "grant_type": "password",
+            "username": "john_doe",
+            "password": "s3cr3t"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "access_token": "2RmRcsC_WBc8wq1vo1Pk", 
+            "token_type": "bearer",
+            "expires_in": 604800
+        }
+
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed",
+            "error_uri": ""
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "error": "invalid_client",
+            "error_description": "Wrong credentials",
+            "error_uri": ""
+        }
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server",
+            "error_uri": ""
+        }
+
+# Group Theater
+
+## Theater Collection [/theater]
+
+Collection of all Theaters
+
+### List all Theaters [GET]
+
++ Response 200 (application/json)
+
+        [{
+            "id": 1, 
+            "title": "Armando Manzanero",
+            "address": "Calle 64 #495",
+            "zip_code": "97000",
+            "town": "Mérida",
+            "province": "YUC",
+            "country": "México",
+            "created_at": "2017-02-01 17:09:07",
+            "updated_at": "2017-04-14 13:47:01"
+        }, 
+        {
+            "id": 2, 
+            "title": "Peón Contreras",
+            "address": "Calle 60 #490",
+            "zip_code": "97000",
+            "town": "Mérida",
+            "province": "YUC",
+            "country": "México",
+            "created_at": "2017-03-01 08:59:30",
+            "updated_at": "2017-03-01 08:59:30"
+        }]
+
+### Create a Theater [POST]
++ Request (application/json)
+
+        {
+            "title": "Peón Contreras",
+            "address": "Calle 60 #491",
+            "zip_code": "97000",
+            "town": "Mérida",
+            "province": "YUC",
+            "country": "México",
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 3, 
+            "title": "Peón Contreras",
+            "address": "Calle 60 #491",
+            "zip_code": "97000",
+            "town": "Mérida",
+            "province": "YUC",
+            "country": "México",
+            "created_at": "2017-04-23 07:27:47",
+            "updated_at": "2017-04-23 07:27:47"
+        }
+
+## Theater [/theater/{id}]
+A single Theater object with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Theater to perform action with
+    
++ Model (application/json)
+
+    JSON representation of the Theater
+    
+    + Body
+
+            {
+                "id": 1, 
+                "title": "Armando Manzanero",
+                "address": "Calle 64 #495",
+                "zip_code": "97000",
+                "town": "Mérida",
+                "province": "YUC",
+                "country": "México",
+                "created_at": "2017-02-01 17:09:07",
+                "updated_at": "2017-04-14 13:47:01"
+            }
+            
+### Retrieve a Theater [GET]
+
++ Response 200 (application/json)
+
+    [Theater][]
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_description": "The requested resource was not found"
+            }
+
+### Update a Theater [PATCH]
++ Request (application/json)
+
+        {
+            "title": "Escenario A",
+        }
+
++ Response 201 (application/json)
+
+    [Theater][]
+        
+### Remove a Theater [DELETE]
++ Response 204
+
+# Group Stage
+
+## Theater Collection [/theater/{theater_id}]
+Collection of all Stages of a theater
+
++ Parameters
+    + theater_id (required, number, `1`) ... Numeric `id` of the Theater to perform action with
+
+### List all Theaters [GET]
+
++ Response 200 (application/json)
+
+        [{
+            "id": 1, 
+            "title": "Escenario 1",
+            "created_at": "2017-02-01 17:09:07",
+            "updated_at": "2017-04-14 13:47:01"
+        }, 
+        {
+            "id": 2, 
+            "title": "Escenario 2",
+            "created_at": "2017-03-01 08:59:30",
+            "updated_at": "2017-03-01 08:59:30"
+        }]
+
+### Create a Stage [POST]
++ Request (application/json)
+
+        {
+            "title": "Escenario 3",
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 3, 
+            "title": "Escenario 3",
+            "created_at": "2017-04-23 07:27:47",
+            "updated_at": "2017-04-23 07:27:47"
+        }
+
+## Stage [/theater/{theater_id}/stage/{id}]
+A single stage object of a theater object with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Stage to perform action with
+    + theater_id (required, number, `1`) ... Numeric `id` of the Theater to perform action with
+    
++ Model (application/json)
+
+    JSON representation of the Theater
+    
+    + Body
+
+            {
+                "id": 1,
+                "title": "Escenario 1",
+                "created_at": "2017-02-01 17:09:07",
+                "updated_at": "2017-04-14 13:47:01"
+            }
+            
+### Retrieve a Stage [GET]
+
++ Response 200 (application/json)
+
+    [Stage][]
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_description": "The requested resource was not found"
+            }
+
+### Update a Stage [PATCH]
++ Request (application/json)
+
+        {
+            "info": "Fatturare a 90gg"
+        }
+
++ Response 201 (application/json)
+
+    [Stage][]
+        
+### Remove a Stage [DELETE]
++ Response 204

@@ -477,3 +477,132 @@ A single Event object with all its details
         
 ### Remove an Event [DELETE]
 + Response 204
+
+# Group Schedule
+
+## Schedules Collection [/events]
+Collection of all Events of a theater
+
+### List all Schedules [GET]
+
++ Parameters
+    + page (required, number, `1`) ... The page number you want to get.
+    + limit (optional, number, `10`) ... Number of results to be returned per page.
+
++ Response 200 (application/json)
+
+        {
+            "total_count": 5,
+            "total_pages": 3,
+            "current_page": 1,
+            "data": [
+                {
+                    "id": 1, 
+                    "title": "El Rey León",
+                    "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+                    "cast": "Jorge Lau, Fela Domínguez",
+                    "director": "Julie Taymor",
+                    "start_date": "2017-02-20 17:09:07",
+                    "end_date": "2017-02-20 17:09:07",
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }, 
+                {
+                    "id": 1, 
+                    "title": "Orquesta Sinfónica de Yucatán, Programa 10",
+                    "description": "Los famosos hermanos Arón y Álvaro Bitrán, miembros del Cuarteto Latinoamericano, regresan a Mérida como solistas del doble concierto de Johannes Brahms.",
+                    "cast": "Arón Bitrán, Alvaro Bitrán",
+                    "director": "Juan Carlos Lomónaco",
+                    "start_date": "2017-02-20 17:09:07",
+                    "end_date": "2017-02-20 17:09:07",
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }
+            ]
+        }
+
+### Create an Schedule [POST]
++ Request (application/json)
+
+        {
+            "title": "El Rey León",
+            "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+            "stage_id": 1,
+            "cast": "Jorge Lau, Fela Domínguez",
+            "director": "Julie Taymor",
+            "start_date": "2017-02-20 17:09:07",
+            "end_date": "2017-02-20 17:09:07"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 1, 
+            "title": "El Rey León",
+            "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+            "cast": "Jorge Lau, Fela Domínguez",
+            "director": "Julie Taymor",
+            "start_date": "2017-02-20 17:09:07",
+            "end_date": "2017-02-20 17:09:07",
+            "created_at": "2017-02-01 17:09:07",
+            "updated_at": "2017-04-14 13:47:01"
+        }
+
+## Schedule [/events/{id}]
+A single Event object with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Event to perform the action
+
++ Model (application/json)
+
+    JSON representation of the Theater
+    
+    + Body
+
+            {
+                "id": 1, 
+                "title": "El Rey León",
+                "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+                "cast": "Jorge Lau, Fela Domínguez",
+                "director": "Julie Taymor",
+                "start_date": "2017-02-20 17:09:07",
+                "end_date": "2017-02-20 17:09:07",
+                "created_at": "2017-02-01 17:09:07",
+                "updated_at": "2017-04-14 13:47:01"
+            }
+            
+### Retrieve an Schedule [GET]
+
++ Response 200 (application/json)
+
+    [Event][]
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_description": "The requested resource was not found"
+            }
+
+### Update an Schedule [PATCH]
++ Request (application/json)
+
+        {
+            "id": 1, 
+            "title": "El Rey León",
+            "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+            "cast": "Jorge Lau, Fela Domínguez",
+            "director": "Julie Taymor",
+            "start_date": "2017-02-20 17:09:07",
+            "end_date": "2017-02-20 17:09:07"
+        }
+
++ Response 201 (application/json)
+
+    [Event][]
+        
+### Remove an Schedule [DELETE]
++ Response 204

@@ -215,7 +215,7 @@ A single Theater object with all its details
 + Request (application/json)
 
         {
-            "title": "Escenario A",
+            "title": "José Peón Contreras",
         }
 
 + Response 201 (application/json)
@@ -305,7 +305,7 @@ A single stage object of a theater object with all its details
 + Request (application/json)
 
         {
-            "info": "Fatturare a 90gg"
+            "title": "Escenario A"
         }
 
 + Response 201 (application/json)
@@ -432,12 +432,3 @@ A single Event object with all its details
         
 ### Remove an Event [DELETE]
 + Response 204
-
-+ Response 404 (application/json)   
-
-    + Body
-    
-            { 
-                "error": "not_found",
-                "error_description": "The requested resource was not found"
-            }

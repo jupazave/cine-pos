@@ -8,7 +8,11 @@ API will allow external apps (like JS frameworks) to interact with Escena Descub
 
 # Host
 
-# API Version
+# Versioning
+
+The version number of the API is added in the URL. The current version is `v1`.
+
+Example: `http://localhost/api/v1/events/123` 
 
 # Pagination
 
@@ -163,7 +167,7 @@ Collection of all Theaters
                     "updated_at": "2017-03-01 08:59:30"
                 }
             ]
-        }A
+        }
 
 ### Create a Theater [POST]
 + Request (application/json)
@@ -254,20 +258,31 @@ Collection of all Stages of a theater
 
 ### List all Stages of a Theater [GET]
 
++ Parameters
+    + page (required, number, `1`) ... The page number you want to get.
+    + limit (optional, number, `10`) ... Number of results to be returned per page.
+
 + Response 200 (application/json)
 
-        [{
-            "id": 1, 
-            "title": "Escenario 1",
-            "created_at": "2017-02-01 17:09:07",
-            "updated_at": "2017-04-14 13:47:01"
-        }, 
         {
-            "id": 2, 
-            "title": "Escenario 2",
-            "created_at": "2017-03-01 08:59:30",
-            "updated_at": "2017-03-01 08:59:30"
-        }]
+            "total_count": 5,
+            "total_pages": 3,
+            "current_page": 1,
+            "data": [
+                {
+                    "id": 1, 
+                    "title": "Escenario 1",
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }, 
+                {
+                    "id": 2, 
+                    "title": "Escenario 2",
+                    "created_at": "2017-03-01 08:59:30",
+                    "updated_at": "2017-03-01 08:59:30"
+                }
+            ]
+        }
 
 ### Create a Stage [POST]
 + Request (application/json)

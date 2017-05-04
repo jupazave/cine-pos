@@ -49,6 +49,7 @@ All requests, except `[POST] /api/v1/users/sign_in`, requires to be authenticate
 
 An unauthorized request receives a `401` response with the following body:
 
+
     {
         "error": "unauthorized",
         "error_description": "This request needs a valid authorization token"
@@ -126,7 +127,7 @@ These are the possible values of the _error_ field and their meaning:
 
 # Group Theater
 
-## Theater Collection [/theater]
+## Theater Collection [/theater?page=1]
 
 Collection of all Theaters
 
@@ -480,8 +481,8 @@ A single Event object with all its details
 
 # Group Schedule
 
-## Schedules Collection [/events]
-Collection of all Events of a theater
+## Schedules Collection [/theater/{theater_id}/schedule]
+Collection of all Schedule of a theater
 
 ### List all Schedules [GET]
 
@@ -498,10 +499,9 @@ Collection of all Events of a theater
             "data": [
                 {
                     "id": 1, 
-                    "title": "El Rey León",
-                    "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
-                    "cast": "Jorge Lau, Fela Domínguez",
-                    "director": "Julie Taymor",
+                    "event_id": 1,
+                    "theater_id": 2,
+                    "stage": "Salón Principal",
                     "start_date": "2017-02-20 17:09:07",
                     "end_date": "2017-02-20 17:09:07",
                     "created_at": "2017-02-01 17:09:07",
@@ -509,10 +509,9 @@ Collection of all Events of a theater
                 }, 
                 {
                     "id": 1, 
-                    "title": "Orquesta Sinfónica de Yucatán, Programa 10",
-                    "description": "Los famosos hermanos Arón y Álvaro Bitrán, miembros del Cuarteto Latinoamericano, regresan a Mérida como solistas del doble concierto de Johannes Brahms.",
-                    "cast": "Arón Bitrán, Alvaro Bitrán",
-                    "director": "Juan Carlos Lomónaco",
+                    "event_id": 1,
+                    "theater_id": 2,
+                    "stage": "Salón Principal",
                     "start_date": "2017-02-20 17:09:07",
                     "end_date": "2017-02-20 17:09:07",
                     "created_at": "2017-02-01 17:09:07",
@@ -525,11 +524,9 @@ Collection of all Events of a theater
 + Request (application/json)
 
         {
-            "title": "El Rey León",
-            "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
-            "stage_id": 1,
-            "cast": "Jorge Lau, Fela Domínguez",
-            "director": "Julie Taymor",
+            "event_id": 1,
+            "theater_id": 2,
+            "stage": "Salón Principal",
             "start_date": "2017-02-20 17:09:07",
             "end_date": "2017-02-20 17:09:07"
         }
@@ -538,21 +535,21 @@ Collection of all Events of a theater
 
         {
             "id": 1, 
-            "title": "El Rey León",
-            "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
-            "cast": "Jorge Lau, Fela Domínguez",
-            "director": "Julie Taymor",
+            "event_id": 1,
+            "theater_id": 2,
+            "stage": "Salón Principal",
             "start_date": "2017-02-20 17:09:07",
             "end_date": "2017-02-20 17:09:07",
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
         }
 
-## Schedule [/events/{id}]
-A single Event object with all its details
+## Schedule [/theater/{theater_id}/schedule/{schedule_id}]
+A single Schedule object with all its details
 
 + Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Event to perform the action
+    + theater_id (required, number, `1`) ... Numeric `id` of the theater to perform the action
+    + schedule_id (required, number, `1`) ... Numeric `id` of the theater to perform the action
 
 + Model (application/json)
 
@@ -562,10 +559,9 @@ A single Event object with all its details
 
             {
                 "id": 1, 
-                "title": "El Rey León",
-                "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
-                "cast": "Jorge Lau, Fela Domínguez",
-                "director": "Julie Taymor",
+                "event_id": 1,
+                "theater_id": 2,
+                "stage": "Salón Principal",
                 "start_date": "2017-02-20 17:09:07",
                 "end_date": "2017-02-20 17:09:07",
                 "created_at": "2017-02-01 17:09:07",
@@ -576,7 +572,7 @@ A single Event object with all its details
 
 + Response 200 (application/json)
 
-    [Event][]
+    [Schedule][]
 
 + Response 404 (application/json)   
 
@@ -592,10 +588,9 @@ A single Event object with all its details
 
         {
             "id": 1, 
-            "title": "El Rey León",
-            "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
-            "cast": "Jorge Lau, Fela Domínguez",
-            "director": "Julie Taymor",
+            "event_id": 1,
+            "theater_id": 2,
+            w"stage": "Salón Principal",
             "start_date": "2017-02-20 17:09:07",
             "end_date": "2017-02-20 17:09:07"
         }

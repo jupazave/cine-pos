@@ -12,20 +12,9 @@ class TheaterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $theaters = Theater::paginate($request->query('limit'));
         return response()->json($theaters);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -34,8 +23,7 @@ class TheaterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $theater = new Theater($request->all());
         $theater->save();
         return response()->json($theater);
@@ -56,16 +44,6 @@ class TheaterController extends Controller
             ], 404);
         }
         return response()->json($theater);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Theater  $theater
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Theater $theater) {
-
     }
 
     /**

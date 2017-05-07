@@ -16,17 +16,18 @@ class CreateTheatersTable extends Migration
         Schema::create('theaters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->text('description')->nullable();
             $table->string('address');
             $table->string('zip_code');
             $table->string('city');
             $table->string('country');
-            $table->string('email');
-            $table->string('facebook');
-            $table->string('instagram');
-            $table->string('twitter');
-            $table->string('webpage');
-            $table->string('profile_picture');
+            $table->string('phone')->nullable();
+            $table->string('email')->unique();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('webpage')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')

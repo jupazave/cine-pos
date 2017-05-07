@@ -9,6 +9,7 @@ $factory->define(App\Theater::class, function (Faker\Generator $faker) {
         'zip_code' => $faker->postcode,
         'city' => $faker->city,
         'country' => $faker->country,
+        'phone' => $faker->phoneNumber,
         'email' => $faker->email,
         'facebook' => $faker->url,
         'instagram' => $faker->url,

@@ -1,0 +1,106 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CINEPOS",
+		"_postman_id": "76beeff9-9e34-b314-ee91-104c3ba68b10",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Theater",
+			"description": "",
+			"item": [
+				{
+					"name": "Index Theater",
+					"request": {
+						"url": "http://cinepos.app/api/v1/theaters",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Index Theater [page,limit]",
+					"request": {
+						"url": "http://cinepos.app/api/v1/theaters?page=2&limit=3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Show Theater",
+					"request": {
+						"url": "http://cinepos.app/api/v1/theaters/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Theater",
+					"request": {
+						"url": "http://cinepos.app/api/v1/theaters",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Armando Manzanero\",\n  \"description\": \"White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.\",\n  \"address\": \"418 Conn Stravenue\\nLeifview, RI 46353\",\n  \"zip_code\": \"97200\",\n  \"city\": \"Merida\",\n  \"country\": \"Yucatan\",\n  \"phone\": \"1-272-361-9037\",\n  \"email\": \"tererersa21@gmail.com\",\n  \"instagram\": \"http://conroy.com/corporis-aut-ut-harum-reprehenderit-consectetur-voluptas-ut\",\n  \"twitter\": \"https://www.littel.org/qui-incidunt-sapiente-fuga-assumenda\",\n  \"webpage\": \"http://www.heathcote.com/eius-assumenda-sed-autem-et-perspiciatis-dolorum.html\",\n  \"profile_picture\": \"http://lorempixel.com/640/480/?94824\",\n  \"user_id\": 1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Theater",
+					"request": {
+						"url": "http://cinepos.app/api/v1/theaters/10",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Armando Manzanero\",\n  \"description\": \"White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.\",\n  \"address\": \"418 Conn Stravenue\\nLeifview, RI 46353\",\n  \"zip_code\": \"97200\",\n  \"city\": \"Meridia\",\n  \"country\": \"Yucatan\",\n  \"phone\": \"1-272-361-9037\",\n  \"email\": \"te121rerersa21@gmail.com\",\n  \"instagram\": \"http://conroy.com/corporis-aut-ut-harum-reprehenderit-consectetur-voluptas-ut\",\n  \"twitter\": \"https://www.littel.org/qui-incidunt-sapiente-fuga-assumenda\",\n  \"webpage\": \"http://www.heathcote.com/eius-assumenda-sed-autem-et-perspiciatis-dolorum.html\",\n  \"profile_picture\": \"http://lorempixel.com/640/480/?94824\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Theater",
+					"request": {
+						"url": "http://cinepos.app/api/v1/theaters/9",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"description": "",
+			"item": []
+		}
+	]
+}

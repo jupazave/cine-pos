@@ -21,10 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->string('first_name');
             $table->string('last_name');
-            $table->date('birthdate');
-            $table->string('phone1');
-            $table->string('phone2');
-            $table->string('address');
             $table->string('zipcode');
             $table->string('city');
             $table->string('country');

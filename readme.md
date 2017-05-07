@@ -1,15 +1,35 @@
 # Escena Descubierta
 
+## Requerimientos
+
+Para poder correr el proyecto es necesario lo siguiente
+
+* php
+* git
+* composer
+* phpunit (Si no usaras homestead)
+* mysql (Si no usaras homestead)
+* vagrant*
+* homestead*
+
+\* Recomendado
+
 ## Instalacion
 
 Clonar el repositorio de github
 
 ```bash
-git clone 
+git clone git@github.com:jupazave/cine-pos.git
+```
+
+instalar las dependencias con
+
+```bash
+composer install
 ```
 
 Es recomendable el uso de Homestead para una mejor fiabilidad del entorno de desarrollo
-a continuacion se mostrara una configuracion del archivo .Homestead.yaml para tomar de base
+a continuacion se mostrara una configuracion del archivo Homestead.yaml para tomar de base
 
 ```text
 ip: "192.168.10.10"
@@ -56,7 +76,12 @@ Para correr las pruebas es necesario saber donde esta ubicada la base de datos, 
 esta ubicada en la maquina Homestead, lo mejor es correrlas desde ahi, en caso de que no se este
 utilizando correrlas normalmente
 
-### Con Homestead
+### Postman
+
+La raiz del proyecto incluye el archivo `postman.json` para importar a postman las solicitudes ya implementadas,
+esta utiliza como host el definido en el Homestead.yaml, en este caso el host es `cinepos.app`
+
+#### Con Homestead
 
 Entrar a la maquina homestead por ssh
 
@@ -75,7 +100,7 @@ o
 vendor/bin/phpunit
 ```
 
-### Con maquina local
+#### Con maquina local
 
 Ingresar a la carpeta del proyecto y correr las pruebas con el siguiente comando
 

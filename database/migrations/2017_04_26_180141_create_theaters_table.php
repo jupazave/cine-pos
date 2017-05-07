@@ -22,7 +22,7 @@ class CreateTheatersTable extends Migration
             $table->string('city');
             $table->string('country');
             $table->string('phone')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->string('twitter')->nullable();

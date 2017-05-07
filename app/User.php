@@ -28,4 +28,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static $createRules = [
+        'username' => 'required|min:5|max:35|unique:users',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:3|max:20|confirmed',
+        'first_name' => 'alpha|min:2|max:40',
+        'last_name' => 'alpha|min:2|max:40',
+        'zipcode' => 'required|numeric',
+        'city' => 'required|alphadash',
+        'country' => 'required|alphadash'
+    ];
+
+    public static $updateRules = [
+        'username' => 'min:5|max:35|unique:users',
+        'email' => 'email|unique:users',
+        'first_name' => 'alpha|min:2|max:40',
+        'last_name' => 'alpha|min:2|max:40',
+        'zipcode' => 'numeric',
+        'city' => 'alphadash',
+        'country' => 'alphadash'
+    ];
 }

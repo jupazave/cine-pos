@@ -15,12 +15,22 @@ class CreateTheatersTable extends Migration
     {
         Schema::create('theaters', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('name');
+            $table->string('description');
             $table->string('address');
             $table->string('zip_code');
-            $table->string('town');
-            $table->string('province');
+            $table->string('city');
             $table->string('country');
+            $table->string('email');
+            $table->string('facebook');
+            $table->string('instagram');
+            $table->string('twitter');
+            $table->string('webpage');
+            $table->string('profile_picture');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
         });
     }

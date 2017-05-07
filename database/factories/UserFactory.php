@@ -15,10 +15,19 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
+    $roles = ['admin', 'user'];
+
     return [
-        'name' => $faker->name,
+        'username' => $faker->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'role' => $faker->randomElements($roles, 1)[0],
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'zipcode' => $faker->postcode,
+        'city' => $faker->city,
+        'country' => $faker->country,
+        'profile_picture' => $faker->imageUrl()
     ];
 });

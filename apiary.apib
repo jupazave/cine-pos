@@ -147,25 +147,41 @@ Collection of all Theaters
             "data": [
                 {
                     "id": 1, 
-                    "title": "Armando Manzanero",
+                    "name": "Armando Manzanero",
+                    "description": "The big one",
+                    "phone": "9991555458",
                     "address": "Calle 64 #495",
                     "zip_code": "97000",
-                    "town": "Mérida",
-                    "province": "YUC",
+                    "city": "Mérida",
                     "country": "México",
+                    "email": "test@test.com",
+                    "facebook": "/armando.manzanero",
+                    "instagram": "armando_manzanero",
+                    "twitter": "@amanzanero",
+                    "webpage": "none",
+                    "profile_picture": "/manzanero.jpg",
+                    "user_id": "24",
                     "created_at": "2017-02-01 17:09:07",
                     "updated_at": "2017-04-14 13:47:01"
                 }, 
                 {
                     "id": 2, 
-                    "title": "Peón Contreras",
-                    "address": "Calle 60 #490",
+                    "name": "Peón Contreras",
+                    "description": "The lil one",
+                    "phone": "9991545438",
+                    "address": "Calle 64 #495",
                     "zip_code": "97000",
-                    "town": "Mérida",
-                    "province": "YUC",
+                    "city": "Mérida",
                     "country": "México",
-                    "created_at": "2017-03-01 08:59:30",
-                    "updated_at": "2017-03-01 08:59:30"
+                    "email": "peonc@test.com",
+                    "facebook": "/peon.contreras",
+                    "instagram": "peon_contreras",
+                    "twitter": "@pcontreras",
+                    "webpage": "none",
+                    "profile_picture": "/pcontreras.jpg",
+                    "user_id": "23",
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
                 }
             ]
         }
@@ -174,26 +190,36 @@ Collection of all Theaters
 + Request (application/json)
 
         {
-            "title": "Peón Contreras",
+            "name": "Peón Contreras",
+            "description": "The lil one",
+            "phone": "9991545438",
             "address": "Calle 60 #491",
             "zip_code": "97000",
             "town": "Mérida",
-            "province": "YUC",
             "country": "México",
+            "twitter": "@pcontreras"
         }
 
 + Response 201 (application/json)
 
         {
             "id": 3, 
-            "title": "Peón Contreras",
+            "name": "Peón Contreras",
+            "description": "",
+            "phone": "9991545438",
             "address": "Calle 60 #491",
             "zip_code": "97000",
-            "town": "Mérida",
-            "province": "YUC",
+            "city": "Mérida",
             "country": "México",
-            "created_at": "2017-04-23 07:27:47",
-            "updated_at": "2017-04-23 07:27:47"
+            "email": "",
+            "facebook": "",
+            "instagram": "",
+            "twitter": "@pcontreras",
+            "webpage": "",
+            "profile_picture": "",
+            "user_id": "23",
+            "created_at": "2017-02-01 17:09:07",
+            "updated_at": "2017-04-14 13:47:01"
         }
 
 ## Theater [/theater/{id}]
@@ -210,12 +236,20 @@ A single Theater object with all its details
 
             {
                 "id": 1, 
-                "title": "Armando Manzanero",
+                "name": "Armando Manzanero",
+                "description": "The big one",
+                "phone": "9991555458",
                 "address": "Calle 64 #495",
                 "zip_code": "97000",
-                "town": "Mérida",
-                "province": "YUC",
+                "city": "Mérida",
                 "country": "México",
+                "email": "test@test.com",
+                "facebook": "/armando.manzanero",
+                "instagram": "armando_manzanero",
+                "twitter": "@amanzanero",
+                "webpage": "none",
+                "profile_picture": "/manzanero.jpg",
+                "user_id": "24",
                 "created_at": "2017-02-01 17:09:07",
                 "updated_at": "2017-04-14 13:47:01"
             }
@@ -370,10 +404,19 @@ Collection of all Events of a theater
             "data": [
                 {
                     "id": 1, 
-                    "title": "El Rey León",
+                    "name": "El Rey León",
                     "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+                    "dramaturgic": "El veloz muerciélago mono",
                     "cast": "Jorge Lau, Fela Domínguez",
                     "director": "Julie Taymor",
+                    "email": "test@test.com",
+                    "facebook": "/rey.leon",
+                    "instagram": "",
+                    "twitter": "",
+                    "webpage": "",
+                    "profile_picture": "rey.leon.jpg",
+                    "category_id": "1",
+                    "user_id": "34",
                     "start_date": "2017-02-20 17:09:07",
                     "end_date": "2017-02-20 17:09:07",
                     "created_at": "2017-02-01 17:09:07",
@@ -381,10 +424,19 @@ Collection of all Events of a theater
                 }, 
                 {
                     "id": 1, 
-                    "title": "Orquesta Sinfónica de Yucatán, Programa 10",
+                    "name": "Orquesta Sinfónica de Yucatán, Programa 10",
                     "description": "Los famosos hermanos Arón y Álvaro Bitrán, miembros del Cuarteto Latinoamericano, regresan a Mérida como solistas del doble concierto de Johannes Brahms.",
+                    "dramaturgic": "El veloz muerciélago mono",
                     "cast": "Arón Bitrán, Alvaro Bitrán",
                     "director": "Juan Carlos Lomónaco",
+                    "email": "test@test.com",
+                    "facebook": "/orquesta.yucatan",
+                    "instagram": "",
+                    "twitter": "",
+                    "webpage": "",
+                    "profile_picture": "Orquesta.jpg",
+                    "category_id": "1",
+                    "user_id": "34",
                     "start_date": "2017-02-20 17:09:07",
                     "end_date": "2017-02-20 17:09:07",
                     "created_at": "2017-02-01 17:09:07",
@@ -397,9 +449,10 @@ Collection of all Events of a theater
 + Request (application/json)
 
         {
-            "title": "El Rey León",
+            "name": "El Rey León",
             "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
             "stage_id": 1,
+            "dramaturgic": "El veloz murcielago",
             "cast": "Jorge Lau, Fela Domínguez",
             "director": "Julie Taymor",
             "start_date": "2017-02-20 17:09:07",
@@ -410,10 +463,19 @@ Collection of all Events of a theater
 
         {
             "id": 1, 
-            "title": "El Rey León",
+            "name": "El Rey León",
             "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+            "dramaturgic": "El veloz muerciélago mono",
             "cast": "Jorge Lau, Fela Domínguez",
             "director": "Julie Taymor",
+            "email": "test@test.com",
+            "facebook": "/rey.leon",
+            "instagram": "",
+            "twitter": "",
+            "webpage": "",
+            "profile_picture": "rey.leon.jpg",
+            "category_id": "1",
+            "user_id": "34",
             "start_date": "2017-02-20 17:09:07",
             "end_date": "2017-02-20 17:09:07",
             "created_at": "2017-02-01 17:09:07",
@@ -434,10 +496,19 @@ A single Event object with all its details
 
             {
                 "id": 1, 
-                "title": "El Rey León",
+                "name": "El Rey León",
                 "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
+                "dramaturgic": "El veloz muerciélago mono",
                 "cast": "Jorge Lau, Fela Domínguez",
                 "director": "Julie Taymor",
+                "email": "test@test.com",
+                "facebook": "/rey.leon",
+                "instagram": "",
+                "twitter": "",
+                "webpage": "",
+                "profile_picture": "rey.leon.jpg",
+                "category_id": "1",
+                "user_id": "34",
                 "start_date": "2017-02-20 17:09:07",
                 "end_date": "2017-02-20 17:09:07",
                 "created_at": "2017-02-01 17:09:07",
@@ -464,7 +535,7 @@ A single Event object with all its details
 
         {
             "id": 1, 
-            "title": "El Rey León",
+            "name": "El Rey León",
             "description": "El rey león es un musical basado en la película homónima de Disney de 1994, con libreto de Roger Allers e Irene Mecchi, canciones de Elton John y Tim Rice, y música adicional de Lebo M, Mark Mancina, Jay Rifkin, Julie Taymor y Hans Zimmer.",
             "cast": "Jorge Lau, Fela Domínguez",
             "director": "Julie Taymor",
@@ -590,7 +661,7 @@ A single Schedule object with all its details
             "id": 1, 
             "event_id": 1,
             "theater_id": 2,
-            w"stage": "Salón Principal",
+            "stage": "Salón Principal",
             "start_date": "2017-02-20 17:09:07",
             "end_date": "2017-02-20 17:09:07"
         }
@@ -600,4 +671,234 @@ A single Schedule object with all its details
     [Event][]
         
 ### Remove an Schedule [DELETE]
++ Response 204
+
+# Group Reviews
+
+## Schedules Collection [/events/{event_id}/reviews]
+Collection of all reviews of an event
+
+### List all Reviews [GET]
+
++ Parameters
+    + page (required, number, `1`) ... The page number you want to get.
+    + limit (optional, number, `10`) ... Number of results to be returned per page.
+
++ Response 200 (application/json)
+
+        {
+            "total": 5,
+            "per_page": 2,
+            "current_page": 1,
+            "last_page": 3,
+            "next_page_url": null,
+            "prev_page_url": null,
+            "from": 1,
+            "to": 2,
+            "data": [
+                {
+                    "id": 1, 
+                    "event_id": 1,
+                    "score": 5,
+                    "name":"Joshua Flores Tuz",
+                    "description": "Excelente actuación"
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }, 
+                {
+                    "id": 1, 
+                    "event_id": 1,
+                    "score": 5,
+                    "name":"Joshua Flores Tuz",
+                    "description": "Excelente actuación"
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }
+            ]
+        }
+
+### Create a Review [POST]
++ Request (application/json)
+
+        {
+            "event_id": 1,
+            "score": 5,
+            "description": "Excelente actuación"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 1, 
+            "event_id": 1,
+            "score": 5,
+            "name":"Joshua Flores Tuz",
+            "description": "Excelente actuación"
+            "created_at": "2017-02-01 17:09:07",
+            "updated_at": "2017-04-14 13:47:01"
+        }
+
+## Review [/event/{event_id}/review/{review_id}]
+A single Review object with all its details
+
++ Parameters
+    + event_id (required, number, `1`) ... Numeric `id` of the event to perform the action
+    + review_id (required, number, `1`) ... Numeric `id` of the review to perform the action
+
++ Model (application/json)
+
+    JSON representation of the Review
+    
+    + Body
+
+            {
+                "id": 1, 
+                "event_id": 1,
+                "score": 5,
+                "name":"Joshua Flores Tuz",
+                "description": "Excelente actuación"
+                "created_at": "2017-02-01 17:09:07",
+                "updated_at": "2017-04-14 13:47:01"
+            }
+            
+### Retrieve a Review [GET]
+
++ Response 200 (application/json)
+
+    [Review][]
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_description": "The requested resource was not found"
+            }
+
+### Update a Review [PATCH]
++ Request (application/json)
+
+        {
+            "id": 1, 
+            "event_id": 1,
+            "score": 5,
+            "name":"Joshua Flores Tuz",
+            "description": "Excelente actuación"
+            "start_date": "2017-02-20 17:09:07",
+            "end_date": "2017-02-20 17:09:07"
+        }
+
++ Response 201 (application/json)
+
+    [Event][]
+        
+### Remove a Review [DELETE]
++ Response 204
+
+# Group Categories
+
+## Categories Collection [/categories/]
+Collection of all categories
+
+### List all Categories [GET]
+
++ Parameters
+    + page (required, number, `1`) ... The page number you want to get.
+    + limit (optional, number, `10`) ... Number of results to be returned per page.
+
++ Response 200 (application/json)
+
+        {
+            "total": 5,
+            "per_page": 2,
+            "current_page": 1,
+            "last_page": 3,
+            "next_page_url": null,
+            "prev_page_url": null,
+            "from": 1,
+            "to": 2,
+            "data": [
+                {
+                    "id": 1, 
+                    "name": "Regional",
+                    "description": "Horror",
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }, 
+                {
+                    "id": 2, 
+                    "name": "Adaptación",
+                    "description": "Fantasía",
+                    "created_at": "2017-02-01 17:09:07",
+                    "updated_at": "2017-04-14 13:47:01"
+                }
+            ]
+        }
+
+### Create a Category [POST]
++ Request (application/json)
+
+        {
+            "name": "Regional"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 1, 
+            "name": "Regional",
+            "description": "Fantasía",
+            "created_at": "2017-02-01 17:09:07",
+            "updated_at": "2017-04-14 13:47:01"
+        }
+
+## Category [/category/{category_id}]
+A single Category object with all its details
+
++ Parameters
+    + category_id (required, number, `1`) ... Numeric `id` of the category to perform the action
+
++ Model (application/json)
+
+    JSON representation of the Category
+    
+    + Body
+
+            {
+                "id": 1, 
+                "name": "Regional",
+                "description": "Fantasía",
+                "created_at": "2017-02-01 17:09:07",
+                "updated_at": "2017-04-14 13:47:01"
+            }
+            
+### Retrieve a Category [GET]
+
++ Response 200 (application/json)
+
+    [Category][]
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_description": "The requested resource was not found"
+            }
+
+### Update a Category [PATCH]
++ Request (application/json)
+
+        {
+            "id": 1, 
+            "name": "Comedia"
+        }
+
++ Response 201 (application/json)
+
+    [Event][]
+        
+### Remove a Category [DELETE]
 + Response 204

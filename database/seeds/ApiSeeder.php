@@ -3,6 +3,7 @@
 use App\Category;
 use App\Event;
 use App\Review;
+use App\Schedule;
 use App\Theater;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -41,6 +42,16 @@ class ApiSeeder extends Seeder
             ->create([
                 'event_id' => function() {
                     return Event::all()->random(1)->first()->id;
+                }
+            ]);
+
+        factory(Schedule::class, 100)
+            ->create([
+                'event_id' => function() {
+                    return Event::all()->random(1)->first()->id;
+                },
+                'theater_id' => function() {
+                    return Theater::all()->random(1)->first()->id;
                 }
             ]);
     }

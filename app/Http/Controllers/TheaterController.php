@@ -26,7 +26,7 @@ class TheaterController extends Controller
     public function store(Request $request) {
         $theater = new Theater($request->all());
         $theater->save();
-        return response()->json($theater);
+        return response()->json($theater, 201);
     }
 
     /**
@@ -40,7 +40,7 @@ class TheaterController extends Controller
         if(!$theater) {
             return response()->json([
                 "error" => "not_found",
-                "error_description" => "The requested resource was not found"
+                "error_message" => "The requested resource was not found"
             ], 404);
         }
         return response()->json($theater);
@@ -70,7 +70,7 @@ class TheaterController extends Controller
         if(!$theater) {
             return response()->json([
                 "error" => "not_found",
-                "error_description" => "The requested resource was not found"
+                "error_message" => "The requested resource was not found"
             ], 404);
         }
 

@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use App\Event;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -75,32 +77,32 @@ class EventTest extends TestCase
         ]);
     }
 
-    // /**
-    //  * @test
-    //  *
-    //  * @return void
-    //  */
-    // public function create_an_event() {
+     /**
+      * @test
+      *
+      * @return void
+      */
+     public function create_an_event() {
+         $category = factory(Category::class)->create();
+         $user = factory(User::class)->create();
+         $response = $this->json('post', route('events.store'), [
+             'name' => 'El Rey Leon',
+             'description' => 'Mock Turtle in the distance, screaming with passion. She had already heard her voice sounded hoarse and strange, and the March Hare',
+             'dramaturgic' => 'Aida Shanahan',
+             'director' => 'Adella Denesik',
+             'cast' => 'Alfonso Jast,Jacky Denesik',
+             'email' => 'cormier.linnie@wehner.com',
+             'facebook' => 'http://pagac.biz/voluptatem-doloremque-sit-eum-culpa-atque-sint',
+             'instagram' => 'http://www.johnston.com/rerum-saepe-dolorum-ipsa-doloribus-exercitationem-tenetur-repellat.html',
+             'twitter' => 'http://torp.com/',
+             'webpage' => 'https://www.considine.biz/quo-veniam-sint-fuga-sunt-necessitatibus-voluptas',
+             'profile_picture' => 'http://lorempixel.com/640/480/?95764',
+             'category_id' => $category->id,
+             'user_id' => $user->id
+         ]);
 
-    //     $response = $this->json('post', '/events', [
-    //         'name' => 'El Rey Leon',
-    //         'description' => 'Mock Turtle in the distance, screaming with passion. She had already heard her voice sounded hoarse and strange, and the March Hare',
-    //         'dramaturgic' => 'Aida Shanahan',
-    //         'director' => 'Adella Denesik',
-    //         'cast' => 'Alfonso Jast,Jacky Denesik',
-    //         'email' => 'cormier.linnie@wehner.com',
-    //         'facebook' => 'http://pagac.biz/voluptatem-doloremque-sit-eum-culpa-atque-sint',
-    //         'instagram' => 'http://www.johnston.com/rerum-saepe-dolorum-ipsa-doloribus-exercitationem-tenetur-repellat.html',
-    //         'twitter' => 'http://torp.com/',
-    //         'webpage' => 'https://www.considine.biz/quo-veniam-sint-fuga-sunt-necessitatibus-voluptas',
-    //         'profile_picture' => 'http://lorempixel.com/640/480/?95764',
-    //         'category_id' => 1,
-    //         'user_id' => 1
-    //     ]);
-
-    //     $response->assertStatus(200);
-        
-    // }
+         $response->assertStatus(200);
+     }
 
     /**
      * @test
@@ -119,6 +121,5 @@ class EventTest extends TestCase
             'id' => $event->id,
             'name' => $event->name,
         ]);
-        
     }
 }

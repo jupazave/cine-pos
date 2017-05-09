@@ -123,7 +123,7 @@ class TheaterTest extends TestCase
      *
      * return @void
      */
-    public function create_theater() {
+    public function create_a_theater() {
         $user = factory(User::class)->create();
         $data = [
             "name" => "Armando Manzanero",
@@ -144,5 +144,8 @@ class TheaterTest extends TestCase
         $response = $this->json('post', route('theaters.store'), $data);
 
         $response->assertStatus(201);
+        $response->assertJson([
+            'name' => 'Armando Manzanero'
+        ]);
     }
 }

@@ -111,3 +111,37 @@ Ingresar a la carpeta del proyecto y correr las pruebas con el siguiente comando
 ```bash
 vendor/bin/phpunit
 ```
+
+### Code Coverage 
+
+Al correr las pruebas deberia tirar un error como el siguiente
+
+```bash
+PHPUnit 5.7.19 by Sebastian Bergmann and contributors.
+
+Error:         No code coverage driver is available
+```
+
+el error no afecta a la ejecucion de las pruebas, pero para poder hacer `code coverage` es necesario habilitar
+un modulo de php ya instalado por defecto en Homestead, para poder habilitarlo usar el siguiente comando
+
+```bash
+sudo phpdismod xdebug
+```
+
+Si ejecutamos las pruebas de nuevo las pruebas, podremos observar como al terminar nos responde con un
+ 
+```bash
+Generating code coverage report in HTML format ... done
+``` 
+
+generando una carpeta `folder` en la raiz del proyecto en la que estara de manera detallada el `code coverage` del proyecto
+
+######ADVERTENCIA
+
+Utilizar el modulo `xdebug` disminuye el rendimiento hasta 3 o 5 veces los programas como `composer` o `phpunit`
+ razon por la cual el modulo esta desactivado por defecto, para poder desactivarlo de nuevo utilizar el siguiente comando
+ 
+ ```bash
+ sudo phpdismod  xdebug
+ ```

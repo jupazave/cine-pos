@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Theater;
+use App\Event;
 use Illuminate\Http\Request;
 
-class TheaterController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class TheaterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $theaters = Theater::paginate($request->query('limit'));
-        return response()->json($theaters);
+        $events = Event::paginate($request->query('limit'));
+        return response()->json($events);
     }
 
     /**
@@ -24,53 +24,53 @@ class TheaterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $theater = new Theater($request->all());
-        $theater->save();
-        return response()->json($theater, 201);
+        $event = new Event($request->all());
+        $event->save();
+        return response()->json($event);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Theater  $theater
+     * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $theater = Theater::find($id);
-        if(!$theater) {
+        $event = Event::with('category')->find($id);
+        if(!$event) {
             return response()->json([
                 "error" => "not_found",
-                "error_message" => "The requested resource was not found"
+                "error_description" => "The requested resource was not found"
             ], 404);
         }
-        return response()->json($theater);
+        return response()->json($event);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Theater  $theater
+     * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Theater $theater)
+    public function update(Request $request, Event $event)
     {
-        $theater->fill($request->all())->save();
-        return response()->json($theater, 201);
+        $event->fill($request->all())->save();
+        return response()->json($event, 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Theater  $theater
+     * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $theater = Theater::destroy($id);
-        if(!$theater) {
+        $event = Event::destroy($id);
+        if(!$event) {
             return response()->json([
                 "error" => "not_found",
-                "error_message" => "The requested resource was not found"
+                "error_description" => "The requested resource was not found"
             ], 404);
         }
 

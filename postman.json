@@ -2,11 +2,101 @@
 	"variables": [],
 	"info": {
 		"name": "CINEPOS",
-		"_postman_id": "76beeff9-9e34-b314-ee91-104c3ba68b10",
+		"_postman_id": "176f8e01-2243-97cf-5c97-bddea0de14b9",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Event",
+			"description": "",
+			"item": [
+				{
+					"name": "Index Event",
+					"request": {
+						"url": "http://cinepos.app/api/v1/events",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Index Event [page,limit]",
+					"request": {
+						"url": "http://cinepos.app/api/v1/events?page=2&limit=3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Show Event",
+					"request": {
+						"url": "http://cinepos.app/api/v1/events/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event",
+					"request": {
+						"url": "http://cinepos.app/api/v1/events",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"White Rabbit put on one of them say, 'Look out now, Five! Don't go splashing paint over me like.\",\n  \"description\": \"Bill! catch hold of its mouth again, and did not get dry again: they had any sense, they'd take the hint; but the Dodo had paused as if she had not noticed before, and behind it was addressed to the.\",\n  \"dramaturgic\": \"Misty Buckridge\",\n  \"director\": \"Mr. Delmer Blick\",\n  \"cast\": \"Lucas Gislason,Lavinia Maggio\",\n  \"email\": \"volkman.patrick@yahoo.com\",\n  \"facebook\": \"https://www.wiza.net/reiciendis-omnis-aspernatur-velit-labore-cupiditate-sed\",\n  \"instagram\": \"http://www.armstrong.info/\",\n  \"twitter\": \"http://schultz.com/\",\n  \"webpage\": \"http://www.lockman.com/doloribus-explicabo-quia-neque-ut-aut-voluptas.html\",\n  \"profile_picture\": \"http://lorempixel.com/640/480/?25238\",\n  \"category_id\": 2,\n  \"user_id\": 1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"url": "http://cinepos.app/api/v1/events/5",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"White Rabbit put on one of them say, 'Look out now, Five! Don't go splashing paint over me like.\",\n  \"description\": \"Bill! catch hold of its mouth again, and did not get dry again: they had any sense, they'd take the hint; but the Dodo had paused as if she had not noticed before, and behind it was addressed to the.\",\n  \"dramaturgic\": \"Misty Buckridge\",\n  \"director\": \"Mr. Delmer Blick\",\n  \"cast\": \"Lucas Gislason,Lavinia Maggio\",\n  \"email\": \"volkman.patrick@yahoo.com\",\n  \"facebook\": \"https://www.wiza.net/reiciendis-omnis-aspernatur-velit-labore-cupiditate-sed\",\n  \"instagram\": \"http://www.armstrong.info/\",\n  \"twitter\": \"http://schultz.com/\",\n  \"webpage\": \"http://www.lockman.com/doloribus-explicabo-quia-neque-ut-aut-voluptas.html\",\n  \"profile_picture\": \"http://lorempixel.com/640/480/?25238\",\n  \"category_id\": 2\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Event",
+					"request": {
+						"url": "http://cinepos.app/api/v1/events/10",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Theater",
 			"description": "",
@@ -28,7 +118,10 @@
 						"url": "http://cinepos.app/api/v1/theaters?page=2&limit=3",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -39,7 +132,10 @@
 						"url": "http://cinepos.app/api/v1/theaters/1",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -90,7 +186,10 @@
 						"url": "http://cinepos.app/api/v1/theaters/9",
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []

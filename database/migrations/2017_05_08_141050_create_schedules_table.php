@@ -21,11 +21,13 @@ class CreateSchedulesTable extends Migration
             $table->integer('event_id')->unsigned();
             $table->foreign('event_id')
                 ->references('id')
-                ->on('events');
+                ->on('events')
+                ->onDelete('cascade');
             $table->integer('theater_id')->unsigned();
             $table->foreign('theater_id')
                 ->references('id')
-                ->on('theaters');
+                ->on('theaters')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

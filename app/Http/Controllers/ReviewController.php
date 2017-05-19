@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use App\Review;
 use Illuminate\Http\Request;
 
@@ -26,10 +28,10 @@ class ReviewController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateReviewRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(CreateReviewRequest $request) {
         $review = new Review($request->all());
         $review->save();
         return response()->json($review, 201);
@@ -55,11 +57,11 @@ class ReviewController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateReviewRequest  $request
      * @param  \App\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(UpdateReviewRequest $request, Review $review)
     {
         $review->fill($request->all())->save();
         return response()->json($review, 201);

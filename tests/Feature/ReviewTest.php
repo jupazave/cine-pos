@@ -10,6 +10,7 @@ namespace Tests\Feature;
 
 use App\Review;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class ReviewTest extends TestCase {
@@ -107,12 +108,16 @@ class ReviewTest extends TestCase {
      * return @void
      */
     public function get_404_to_undefined_reviews_id() {
-        $theater = factory(Theater::class)->create([
-            'name' => 'Joshua Flores'
+        $event = factory(Event::class)->create();
+        $review = factory(Review::class)->create([
+            'name' => 'Joshua Flores',
+            "description"=> "White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
+            "score"=> 3,
+            "event_id"=> $event->id
         ]);
 
         $response = $this->json('get', route('reviews.show', [
-            'id' => $theater->id+1
+            'id' => $review->id+1
         ]));
 
         $response->assertStatus(404);
@@ -127,21 +132,12 @@ class ReviewTest extends TestCase {
      * return @void
      */
     public function create_a_reviews() {
-        $user = factory(User::class)->create();
+        $event = factory(Event::class)->create();
         $data = [
             "name" => "Armando Manzanero",
-            "description"=> "White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
-            "address"=> "418 Conn Stravenue\nLeifview, RI 46353",
-            "zip_code"=> "97200",
-            "city"=> "Merida",
-            "country"=> "Yucatan",
-            "phone"=> "1-272-361-9037",
-            "email"=> "tererersa21@gmail.com",
-            "instagram"=> "http://conroy.com/corporis-aut-ut-harum-reprehenderit-consectetur-voluptas-ut",
-            "twitter"=> "https://www.littel.org/qui-incidunt-sapiente-fuga-assumenda",
-            "webpage"=> "http://www.heathcote.com/eius-assumenda-sed-autem-et-perspiciatis-dolorum.html",
-            "profile_picture"=> "http://lorempixel.com/640/480/?94824",
-            "user_id"=> $user->id
+            "description"=> "White Rabbit, jumping up and x  on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
+            "score"=> 3,
+            "event_id"=> $event->id
         ];
 
         $response = $this->json('post', route('theaters.store'), $data);

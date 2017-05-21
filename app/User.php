@@ -49,4 +49,12 @@ class User extends Authenticatable
         'city' => 'alphadash',
         'country' => 'alphadash'
     ];
+
+    public function theaters() {
+        return $this->hasMany('App\Theater', 'user_id');
+    }
+
+    public function events() {
+        return $this->hasMany('App\Event', 'user_id');
+    }
 }

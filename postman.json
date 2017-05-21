@@ -197,6 +197,105 @@
 			]
 		},
 		{
+			"name": "Review",
+			"description": "",
+			"item": [
+				{
+					"name": "Index Review",
+					"request": {
+						"url": "http://cinepos.app/api/v1/reviews",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Index Review [page,limit]",
+					"request": {
+						"url": "http://cinepos.app/api/v1/reviews?page=2&limit=3",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Show Review",
+					"request": {
+						"url": "http://cinepos.app/api/v1/reviews/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Review",
+					"request": {
+						"url": "http://cinepos.app/api/v1/review",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Armando Manzanero\",\n  \"description\": \"White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.\",\n  \"score\": 3,\n  \"event_id\": 1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"url": "http://cinepos.app/api/v1/reviews/10",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Armando Manzanero\",\n  \"description\": \"White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.\",\n  \"score\": \"3\",\n  \"event_id\": 1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Review",
+					"request": {
+						"url": "http://cinepos.app/api/v1/reviews/9",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "User",
 			"description": "",
 			"item": []

@@ -141,5 +141,5 @@ Utilizar el modulo `xdebug` disminuye el rendimiento hasta 3 o 5 veces los progr
  razon por la cual el modulo esta desactivado por defecto, para poder desactivarlo de nuevo utilizar el siguiente comando
  
  ```bash
- sudo phpdismod  xdebug
+ sudo phpdismod xdebug
  ```

@@ -3,17 +3,18 @@
  * Created by PhpStorm.
  * User: La_ma
  * Date: 18/05/2017
- * Time: 10:38 PM
+ * Time: 10:32 PM
  */
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Review;
 
 
 use App\Review;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
-class UpdateReviewRequest extends FormRequest
-{
+class CreateReviewRequest extends FormRequest {
+
 	public function authorize()
     {
         return true;
@@ -26,6 +27,11 @@ class UpdateReviewRequest extends FormRequest
      */
     public function rules()
     {
-        return Review::$updateRules;
+        return Review::$createRules;
+    }
+
+    protected function formatErrors(Validator $validator)
+    {
+        return $validator->errors()->all();
     }
 }

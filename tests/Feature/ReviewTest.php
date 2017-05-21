@@ -131,7 +131,7 @@ class ReviewTest extends TestCase {
      *
      * return @void
      */
-    public function create_a_reviews() {
+    public function create_a_review() {
         $event = factory(Event::class)->create();
         $data = [
             "name" => "Armando Manzanero",
@@ -145,6 +145,77 @@ class ReviewTest extends TestCase {
         $response->assertStatus(201);
         $response->assertJson([
             'name' => 'Armando Manzanero'
+        ]);
+    }
+
+         /**
+     * @test
+     *
+     * return @void
+     */
+    public function update_a_review() {
+
+        $event = factory(Event::class)->create();
+        $review = factory(Review::class)->create([
+            'name' => 'Joshua',
+            'event_id' => $event->id
+        ]);
+
+        $data = [
+            'name' => 'Majo',
+        ];
+
+        $response = $this->json('put', route('reviews.update', [
+            'id' => $review->id
+        ]), $data);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'name' => 'Majo'
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * return @void
+     */
+    public function destroy_an_event() {
+
+        $event = factory(Event::class)->create();
+        $review = factory(Review::class)->create([
+            'name' => 'Joshua',
+            'event_id' => $event->id
+        ]);
+
+        $response = $this->json('delete', route('reviews.destroy', [
+            'id' => $review->id
+        ]));
+
+        $response->assertStatus(204);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function get_404_to_undefined_event_id_on_destroy() {
+
+        $event = factory(Event::class)->create();
+        $review = factory(Review::class)->create([
+            'name' => 'Joshua',
+            'event_id' => $event->id
+        ]);
+
+        $response = $this->json('delete', route('reviews.destroy', [
+            'id' => $review->id+1
+        ]));
+
+        $response->assertStatus(404);
+
+        $response->assertJsonStructure([
+            'error','error_message'
         ]);
     }
 }

@@ -8,8 +8,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateReviewRequest;
-use App\Http\Requests\UpdateReviewRequest;
+use App\Http\Requests\Review\CreateReviewRequest;
+use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Review;
 use Illuminate\Http\Request;
 
@@ -64,7 +64,7 @@ class ReviewController extends Controller {
     public function update(UpdateReviewRequest $request, Review $review)
     {
         $review->fill($request->all())->save();
-        return response()->json($review, 201);
+        return response()->json($review, 200);
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Theater;
-use App\Http\Requests\Theater\CreateTheaterRequest;
-use App\Http\Requests\Theater\UpdateTheaterRequest;
+use App\Category;
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 
-class TheaterController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +15,18 @@ class TheaterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $theaters = Theater::paginate($request->query('limit'));
+        $theaters = Category::paginate($request->query('limit'));
         return response()->json($theaters);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Theater\CreateTheaterRequest  $request
+     * @param  \App\Http\Requests\Category\CreateCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateTheaterRequest $request) {
-        $theater = new Theater($request->all());
+    public function store(CreateCategoryRequest $request) {
+        $theater = new Category($request->all());
         $theater->save();
         return response()->json($theater, 201);
     }
@@ -34,11 +34,11 @@ class TheaterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Theater  $theater
+     * @param  \App\Category  $theater
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $theater = Theater::find($id);
+        $theater = Category::find($id);
         if(!$theater) {
             return response()->json([
                 "error" => "not_found",
@@ -51,11 +51,11 @@ class TheaterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Theater\UpdateTheaterRequest  $request
-     * @param  \App\Theater  $theater
+     * @param  \App\Http\Requests\Category\UpdateCategoryRequest  $request
+     * @param  \App\Category  $theater
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTheaterRequest $request, Theater $theater)
+    public function update(UpdateCategoryRequest $request, Category $theater)
     {
         $theater->fill($request->all())->save();
         return response()->json($theater, 200);
@@ -64,11 +64,11 @@ class TheaterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Theater  $theater
+     * @param  \App\Category  $theater
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $theater = Theater::destroy($id);
+        $theater = Category::destroy($id);
         if(!$theater) {
             return response()->json([
                 "error" => "not_found",

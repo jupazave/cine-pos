@@ -56,7 +56,7 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $event->fill($request->all())->save();
-        return response()->json($event, 201);
+        return response()->json($event, 200);
     }
 
     /**

@@ -148,4 +148,29 @@ class TheaterTest extends TestCase
             'name' => 'Armando Manzanero'
         ]);
     }
+
+    /**
+     * @test
+     *
+     * return @void
+     */
+    public function update_a_theater() {
+
+        $theater = factory(Theater::class)->create([
+            'name' => 'Raul Migdonio'
+        ]);
+
+        $data = [
+            'name' => 'Not Raul Migdonio',
+        ];
+
+        $response = $this->json('put', route('theaters.update', [
+            'id' => $theater->id
+        ]), $data);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'name' => 'Not Raul Migdonio',
+        ]);
+    }
 }

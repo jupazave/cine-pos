@@ -28,7 +28,7 @@ class EventController extends Controller
     public function store(CreateEventRequest $request) {
         $event = new Event($request->all());
         $event->save();
-        return response()->json($event);
+        return response()->json($event, 201);
     }
 
     /**
@@ -42,7 +42,7 @@ class EventController extends Controller
         if(!$event) {
             return response()->json([
                 "error" => "not_found",
-                "error_description" => "The requested resource was not found"
+                "error_message" => "The requested resource was not found"
             ], 404);
         }
         return response()->json($event);
@@ -72,7 +72,7 @@ class EventController extends Controller
         if(!$event) {
             return response()->json([
                 "error" => "not_found",
-                "error_description" => "The requested resource was not found"
+                "error_message" => "The requested resource was not found"
             ], 404);
         }
 

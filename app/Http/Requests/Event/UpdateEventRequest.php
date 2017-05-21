@@ -4,6 +4,7 @@ namespace App\Http\Requests\Event;
 
 use App\Event;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdateEventRequest extends FormRequest
 {

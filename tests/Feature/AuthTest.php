@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -9,6 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * @test
      *
@@ -30,14 +33,14 @@ class AuthTest extends TestCase
         $response = $this->json('post', route('auth.signup'), $data);
         $response->assertStatus(200);
 
-        $headers = [ 'HTTP_Authorization' => 'Bearer ' . $response->token ];
+        $headers = [ 'HTTP_Authorization' => 'Bearer ' . $response->json()["token"] ];
 
-        $response = $this->json('get', route('me'), array(), $headers);
+        $response = $this->json('get', route('auth.me'), array(), $headers);
         $response->assertStatus(200);
 
         $response->assertJson([
-            'username' => 'usrpost',
-            "email" => "usrpost@gmail.com"
+            'username' => 'usr.post',
+            "email" => "usr.post@gmail.com"
         ]);
     }
 
@@ -50,7 +53,7 @@ class AuthTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'usr.post',
-            "password" => "secret"
+            "password" => bcrypt("secret")
         ]);
 
         $data = [
@@ -61,13 +64,13 @@ class AuthTest extends TestCase
         $response = $this->json('post', route('auth.login'), $data);
         $response->assertStatus(200);
 
-        $headers = [ 'HTTP_Authorization' => 'Bearer ' . $response->token ];
+        $headers = [ 'HTTP_Authorization' => 'Bearer ' . $response->json()["token"] ];
 
-        $response = $this->json('get', route('me'), array(), $headers);
+        $response = $this->json('get', route('auth.me'), array(), $headers);
         $response->assertStatus(200);
 
         $response->assertJson([
-            'username' => 'usrpost'
+            'username' => 'usr.post'
         ]);
     }
 }

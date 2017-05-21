@@ -17,7 +17,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('dramaturgic');
+            $table->string('dramaturgic')->nullable();
             $table->string('director');
             $table->string('cast');
             $table->string('email')->nullable();

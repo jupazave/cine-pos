@@ -9,8 +9,8 @@
 namespace Tests\Feature;
 
 use App\Review;
+use App\Event;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class ReviewTest extends TestCase {
@@ -140,7 +140,7 @@ class ReviewTest extends TestCase {
             "event_id"=> $event->id
         ];
 
-        $response = $this->json('post', route('theaters.store'), $data);
+        $response = $this->json('post', route('reviews.store'), $data);
 
         $response->assertStatus(201);
         $response->assertJson([

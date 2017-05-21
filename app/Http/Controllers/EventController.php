@@ -38,7 +38,7 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $event = Event::with('category')->find($id);
+        $event = Event::with('category', 'reviews')->find($id);
         if(!$event) {
             return response()->json([
                 "error" => "not_found",

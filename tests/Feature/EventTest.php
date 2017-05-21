@@ -37,21 +37,21 @@ class EventTest extends TestCase
      * @return void
      */
     public function get_third_page_events_with_custom_limit() {
-        factory(Event::class, 100)->create();
+        factory(Event::class, 20)->create();
 
         $response = $this->json('get', route('events.index', [
-            'limit' => 20,
+            'limit' => 5,
             'page' => 3
         ]));
 
         $response->assertStatus(200);
         $response->assertJson([
-            'total' => 100,
-            'per_page' => 20,
+            'total' => 20,
+            'per_page' => 5,
             'current_page' => 3,
-            'last_page' => 5,
-            'from' => 41,
-            'to' => 60
+            'last_page' => 4,
+            'from' => 11,
+            'to' => 15
         ]);
     }
 

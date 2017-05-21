@@ -40,4 +40,34 @@ class AuthTest extends TestCase
             "email" => "usrpost@gmail.com"
         ]);
     }
+
+    /**
+     * @test
+     *
+     * return @void
+     */
+    public function login() {
+
+        $user = factory(User::class)->create([
+            'username' => 'usr.post',
+            "password" => "secret"
+        ]);
+
+        $data = [
+            "username" => "usr.post",
+            "password" => "secret",
+        ];
+    
+        $response = $this->json('post', route('auth.login'), $data);
+        $response->assertStatus(200);
+
+        $headers = [ 'HTTP_Authorization' => 'Bearer ' . $response->token ];
+
+        $response = $this->json('get', route('me'), array(), $headers);
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'username' => 'usrpost'
+        ]);
+    }
 }

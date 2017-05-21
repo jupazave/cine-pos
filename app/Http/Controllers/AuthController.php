@@ -4,35 +4,54 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\User\CreateUserRequest;
+
+
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
 
     public function login(Request $request) {
 
-    	$credentials = Input::only('email', 'password');
+    	$credentials = $request->only('username', 'password');
 
-    	if (! $token = JWTAuth::attempt($credentials)) {
-			return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
-		}
+        try {
+            // attempt to verify the credentials and create a token for the user
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json([
+                    'error' => 'invalid_credentials' ,
+                    "error_message" => "Wrong credentials"
+                ], 401);
+            }
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
 
-		return Response::json(compact('token'));
+        // all good so return the token
+        return response()->json(array_merge(compact('token'), ["expires_in" => 7*24*60 ]));
 
     }
 
     public function signup(Request $request) {
 
-    	 $credentials = Input::only('email', 'password');
+        $user = new User($request->all());
+        $user->password = bcrypt($user->password);
+        $user->role = 'user';
 
-		try {
-			$user = User::create($credentials);
-		} catch (Exception $e) {
-			return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
-		}
+		$user->save();
+		
+        try {
 
-		$token = JWTAuth::fromUser($user);
+		  $token = JWTAuth::fromUser($user);
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
 
-		return Response::json(compact('token'));
+        return response()->json(array_merge(compact('token'), ["expires_in" => 7*24*60 ]));
 
     }
 

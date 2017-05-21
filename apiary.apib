@@ -43,9 +43,22 @@ The API can answer with the following HTTP codes. Only 20x codes are successfull
 </table>
 
 
+{
+
+    "username": "jupazave1",
+    "email": "jupazav1e@gmail.com",
+    "password": "hola",
+    "first_name": "Juan Pablo",
+    "last_name": "Zamora Veraza",
+    "zipcode": "97305",
+    "city": "Merida",
+    "country": "Yuc"
+    
+}
+
 # Authentication
 
-All requests, except `[POST] /api/v1/users/sign_in`, requires to be authenticated.
+All requests, except `[POST] /api/v1/auth/login` and `[POST] /api/v1/auth/signin`, requires to be authenticated.
 
 An unauthorized request receives a `401` response with the following body:
 
@@ -57,7 +70,7 @@ An unauthorized request receives a `401` response with the following body:
 
 # Group Sign in
 
-### POST /sign_in
+### POST /login
 
 The sign in process is compliant with [RFC 6749 (OAuth 2.0)](http://tools.ietf.org/html/rfc6749), in particular with _4.3 "Resource Owner Password Credentials Grant"._ The caller must provide username and password and the API will return the access token (see [RFC 6749, section 5.1 "Successful Response"](http://tools.ietf.org/html/rfc6749#section-5.1)) or an error if something goes bad (see [RFC 6749, section 5.2 "Error Response"](http://tools.ietf.org/html/rfc6749#section-5.1))
 
@@ -83,13 +96,12 @@ Error responses are compliant with [RFC 6749, section 5.2 "Error response"](http
 These are the possible values of the _error_ field and their meaning:
 
 * **invalid_request:** The request is missing a required parameter, includes an unsupported parameter value (other than grant type), repeats a parameter, includes multiple credentials, utilizes more than one mechanism for authenticating the client, or is otherwise malformed.
-* **invalid_client:** The provided credentials ( _username_ and _password_ ) are invalid or wrong. The client can't be authorized.
+* **invalid_client:** The provided credentials ( _email_ and _password_ ) are invalid or wrong. The client can't be authorized.
 
 + Request (application/json)
 
         {
-            "grant_type": "password",
-            "username": "john_doe",
+            "email": "john_doe@mail.com",
             "password": "s3cr3t"
         }
 
@@ -97,7 +109,6 @@ These are the possible values of the _error_ field and their meaning:
 
         {
             "access_token": "2RmRcsC_WBc8wq1vo1Pk", 
-            "token_type": "bearer",
             "expires_in": 604800
         }
 
@@ -105,24 +116,94 @@ These are the possible values of the _error_ field and their meaning:
 
         {
             "error": "invalid_request",
-            "error_description": "A required parameter is missing or the request is malformed",
-            "error_uri": ""
+            "error_description": "A required parameter is missing or the request is malformed"
         }
         
 + Response 401 (application/json)
 
         {
             "error": "invalid_client",
-            "error_description": "Wrong credentials",
-            "error_uri": ""
+            "error_description": "Wrong credentials"
         }
 
 + Response 500 (application/json)
 
         {
             "error": ""
-            "error_description": "an error occurred on the server",
-            "error_uri": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### POST /signin
+
+The sign in process is compliant with [RFC 6749 (OAuth 2.0)](http://tools.ietf.org/html/rfc6749), in particular with _4.3 "Resource Owner Password Credentials Grant"._ The caller must provide username and password and the API will return the access token (see [RFC 6749, section 5.1 "Successful Response"](http://tools.ietf.org/html/rfc6749#section-5.1)) or an error if something goes bad (see [RFC 6749, section 5.2 "Error Response"](http://tools.ietf.org/html/rfc6749#section-5.1))
+
+The returned token is _bearer_ token (defined in [RFC6750](http://tools.ietf.org/html/rfc6750)) and it must be used to authenticate the client in every subsequent request, including the token in the request header:
+
+    GET /resource/1 HTTP/1.1
+    Host: example.com
+    Authorization: Bearer mF_9.B5f-4.1JqM
+
+### Successfull response
+
+* **access_token:** The token (string)
+* **token_type:** The token type, described in [RFC 6749, section 7.1 "Access Token Types"](http://tools.ietf.org/html/rfc6749#section-7.1). Actually only **bearer**
+* **expires_in:** [optional] The token validity (in seconds). The default validity is 7 days (604800 seconds)
+
+### Error response
+
+* **error:** If the response code is different from 20x, this field contains the error message. See [RFC 6749, section 5.2 "Error Response"](http://tools.ietf.org/html/rfc6749#section-5.2) for details
+* **error_description:** [optional] A human-readable error message explaining what happened
+* **error_uri:** [optional] The URI of a web page containing full description of the error and possible fixes
+
+Error responses are compliant with [RFC 6749, section 5.2 "Error response"](http://tools.ietf.org/html/rfc6749#section-5.2).
+These are the possible values of the _error_ field and their meaning:
+
+* **invalid_request:** The request is missing a required parameter, includes an unsupported parameter value (other than grant type), repeats a parameter, includes multiple credentials, utilizes more than one mechanism for authenticating the client, or is otherwise malformed.
+* **invalid_client:** The provided credentials ( _email_ and _password_ ) are invalid or wrong. The client can't be authorized.
+
++ Request (application/json)
+
+        {
+            
+
+    "username": "jupazave1",
+    "email": "jupazav1e@gmail.com",
+    "password": "hola",
+    "first_name": "Juan Pablo",
+    "last_name": "Zamora Veraza",
+    "zipcode": "97305",
+    "city": "Merida",
+    "country": "Yuc"
+    
+
+        }
+
++ Response 200 (application/json)
+
+        {
+            "token": "2RmRcsC_WBc8wq1vo1Pk", 
+            "expires_in": 604800
+        }
+
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "error": "invalid_client",
+            "error_description": "Wrong credentials"
+        }
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 # Group Theater

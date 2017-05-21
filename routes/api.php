@@ -26,7 +26,8 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['prefix' => 'auth'], function () {
-        Route::post('login', 'AuthController@login');
-        Route::post('signup', 'AuthController@signup');
+        Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
+        Route::post('signup', [ 'as' => 'auth.signup', 'uses' => 'AuthController@signup']);
+        Route::get('me', 'AuthController@getUser')->middleware('jwt.auth');
     });
 });

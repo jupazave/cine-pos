@@ -13,6 +13,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class EventTest extends TestCase
 {
     use DatabaseMigrations;
+    use WithoutMiddleware;
 
     /**
      * @test

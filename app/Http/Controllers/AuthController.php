@@ -55,11 +55,12 @@ class AuthController extends Controller
 
     }
 
-    public function resetPassword(Request $request) {
+    public function getUser(Request $request)
+    {
+        $user = $request->attributes->get('user') ;
 
+        return response()->json($user);
+        
     }
 
-    public function requestPassword(Request $request) {
-
-    }
 }

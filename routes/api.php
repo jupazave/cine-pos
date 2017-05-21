@@ -20,14 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function () {
     Route::resource('theaters', 'TheaterController');
     Route::resource('events', 'EventController');
+    Route::resource('categories', 'CategoryController');
 
     Route::group(['prefix' => 'auth'], function () {
-    	Route::post('login', 'AuthController@login');
-    	Route::post('signup', 'AuthController@signup');
-    	Route::post('resetPassword', 'AuthController@resetPassword');
-    	Route::post('requestPassword', 'AuthController@requestPassword');
-    	//Route::post('signup', 'RegisterController@create');
-    	//Route::post('resetPassword', 'ResetPasswordController');
-    	//Route::post('requestPassword', 'ForgotPasswordController');
-	});
+        Route::post('login', 'AuthController@login');
+        Route::post('signup', 'AuthController@signup');
+        Route::post('resetPassword', 'AuthController@resetPassword');
+        Route::post('requestPassword', 'AuthController@requestPassword');
+        //Route::post('signup', 'RegisterController@create');
+        //Route::post('resetPassword', 'ResetPasswordController');
+        //Route::post('requestPassword', 'ForgotPasswordController');
+    });
+
+
 });

@@ -1,8 +1,6 @@
 # Escena Descubierta
 
-![alt text](https://travis-ci.org/jupazave/cine-pos.svg?branch=master "Travis CI")
-
-https://travis-ci.org/jupazave/cine-pos.svg?branch=master
+![Travis CI](https://travis-ci.org/jupazave/cine-pos.svg?branch=master "Travis CI")
 
 ## Requerimientos
 

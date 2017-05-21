@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Http\Requests\Event\CreateEventRequest;
+use App\Http\Requests\Event\UpdateEventRequest;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -23,7 +25,7 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(CreateEventRequest $request) {
         $event = new Event($request->all());
         $event->save();
         return response()->json($event);
@@ -53,7 +55,7 @@ class EventController extends Controller
      * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event)
     {
         $event->fill($request->all())->save();
         return response()->json($event, 200);

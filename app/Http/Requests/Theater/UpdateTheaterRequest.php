@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Theater;
 
 use App\Theater;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTheaterRequest extends FormRequest
@@ -15,6 +16,14 @@ class UpdateTheaterRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function formatErrors(Validator $validator)
+    {
+        return $validator->errors()->all();
     }
 
     /**

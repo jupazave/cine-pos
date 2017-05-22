@@ -275,6 +275,11 @@ Collection of all Theaters
 
 ### Create a Theater [POST]
 + Request (application/json)
+    + Headers 
+
+          Accept: application/json
+    
+    + Body
 
         {
             "name": "Peón Contreras",
@@ -308,6 +313,11 @@ Collection of all Theaters
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
         }
+        
++ Response 422 (application/json)
+        [
+          "The name has already been taken."
+        ]
 
 ## Theater [/theater/{id}]
 A single Theater object with all its details
@@ -353,22 +363,50 @@ A single Theater object with all its details
     
             { 
                 "error": "not_found",
-                "error_description": "The requested resource was not found"
+                "error_message": "The requested resource was not found"
             }
 
 ### Update a Theater [PATCH]
 + Request (application/json)
+    + Headers
+    
+        Accept: application/json
+        
+    + Body
 
         {
-            "title": "José Peón Contreras",
+            "name": "José Peón Contreras",
         }
 
 + Response 201 (application/json)
 
     [Theater][]
-        
+    
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_message": "The requested resource was not found"
+            }
+    
++ Response 422 (application/json)
+        [
+          "The name has already been taken."
+        ]
+
 ### Remove a Theater [DELETE]
 + Response 204
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_message": "The requested resource was not found"
+            }
 
 
 # Group Event

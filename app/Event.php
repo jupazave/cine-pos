@@ -15,6 +15,10 @@ class Event extends Model
         return $this->hasMany('App\Review');
     }
 
+    public function schedules(){
+        return $this->belongsToMany('App\Theater', 'schedules');
+    }
+
     public function reviewsCount() {
         return $this->reviews()->count();
     }

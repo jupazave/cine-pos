@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        switch ($exception->getStatusCode()) {
+        /*switch ($exception->getStatusCode()) {
             case 400: {
                 return response()->json([
                     'error' => 'bad_request',
@@ -86,7 +86,7 @@ class Handler extends ExceptionHandler
                 ]);
             }
 
-        }
+        }*/
 
         return parent::render($request, $exception);
     }

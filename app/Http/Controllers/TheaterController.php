@@ -40,10 +40,7 @@ class TheaterController extends Controller
     public function show($id) {
         $theater = Theater::find($id);
         if(!$theater) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
         return response()->json($theater);
     }

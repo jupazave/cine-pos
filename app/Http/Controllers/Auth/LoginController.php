@@ -36,4 +36,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function login() {
+        $credentials = Input::only('email', 'password');
+
+       if (!$token = JWTAuth::attempt($credentials)) {
+           return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
+       }
+
+       return Response::json(compact('token'));
+    }
 }

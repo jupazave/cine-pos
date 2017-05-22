@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class TheaterTest extends TestCase
 {
     use DatabaseMigrations;
+    use WithoutMiddleware;
 
     /**
      * @test
@@ -159,6 +160,7 @@ class TheaterTest extends TestCase
         $theater = factory(Theater::class)->create([
             'name' => 'Raul Migdonio'
         ]);
+
 
         $data = [
             'name' => 'Not Raul Migdonio',

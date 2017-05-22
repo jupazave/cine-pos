@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class CategoryTest extends TestCase
 {
     use DatabaseMigrations;
+    use WithoutMiddleware;
 
     /**
      * @test

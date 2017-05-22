@@ -10,12 +10,15 @@ namespace Tests\Feature;
 
 use App\Review;
 use App\Event;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ReviewTest extends TestCase {
 
     use DatabaseMigrations;
+    use WithoutMiddleware;
 
     /**
      * @test

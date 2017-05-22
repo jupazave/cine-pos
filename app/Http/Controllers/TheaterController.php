@@ -67,10 +67,7 @@ class TheaterController extends Controller
     public function destroy($id) {
         $theater = Theater::destroy($id);
         if(!$theater) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
 
         return response(null, 204);

@@ -22,12 +22,10 @@ Route::group(['prefix' => 'v1'], function () {
         Route::resource('theaters', 'TheaterController');
         Route::resource('events', 'EventController');
         Route::resource('categories', 'CategoryController');
+        Route::group(['prefix' => 'events/{event_id}'], function () {
+            Route::resource('reviews', 'ReviewController');
+        });
 
-
-    });
-
-    Route::group(['prefix' => 'events/{event_id}'], function () {
-        Route::resource('reviews', 'ReviewController');
     });
 
     Route::group(['prefix' => 'auth'], function () {

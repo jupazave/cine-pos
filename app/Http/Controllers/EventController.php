@@ -16,6 +16,11 @@ class EventController extends Controller
      */
     public function index(Request $request) {
         $events = Event::paginate($request->query('limit'));
+        $events->map(function ($event, $key) {
+            $reviewsCount = $event->reviewsCount();
+            $event['reviewsCount'] =  $reviewsCount;
+            return $event;
+        });
         return response()->json($events);
     }
 
@@ -45,6 +50,8 @@ class EventController extends Controller
                 "error_message" => "The requested resource was not found"
             ], 404);
         }
+        $reviewsCount = $event->reviewsCount();
+        $event['reviewsCount'] =  $reviewsCount;
         return response()->json($event);
     }
 

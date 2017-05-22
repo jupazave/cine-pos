@@ -15,6 +15,11 @@ class Event extends Model
         return $this->hasMany('App\Review');
     }
 
+    public function reviewsCount() {
+        return $this->reviews()->count();
+    }
+
+
     protected $guarded = [];
 
     public static $createRules = [

@@ -22,24 +22,36 @@ class ScheduleController extends Controller
         $startDate = $request->query('start_date') || null;
         $endDate = $request->query('end_date') || null;
 
-        if ($category_id) {
-            $events = Event::where('category_id', $category_id)->get();
-            //dd($events);
+        // if ($category_id) {
+        //     $events = Event::where('category_id', $category_id)->get();
+        //     //dd($events);
 
-            foreach ($events as $event ) {
-                foreach ($event->schedules as $sch) {
-                    dd($sch->pivot->id);
-                }
+        //     foreach ($events as $event ) {
+        //         foreach ($event->schedules as $schedule) {
+        //             dd($schedule->pivot);
+        //         }
+        //     }
+
+
+        // }
+
+        $schedules = Schedule::with('event')->get();
+//dd($request->query());
+        $schedules->map(function ($schedule, $key) {
+            dd($category_id);
+            if($schedule->event->category_id === 3){
+                return $schedule;
+            } else {
+                
             }
-        }
+        });
 
-        //$schedules = Schedule::paginate($request->query('limit'));
         /*$events->map(function ($event, $key) {
             $reviewsCount = $event->reviewsCount();
             $event['reviewsCount'] =  $reviewsCount;
             return $event;
         });*/
-        return response()->json($events);
+        return response()->json($schedules);
     }
 
     /**
@@ -49,28 +61,26 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CreateScheduleRequest $request) {
-        $schedule = new Event($request->all());
-        $event->save();
-        return response()->json($event, 201);
+        $schedule = new Schedule($request->all());
+        $schedule->save();
+        return response()->json($schedule, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Theater  $event
+     * @param  \App\Schedule  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $event = Event::with('category', 'reviews')->find($id);
-        if(!$event) {
+        $schedule = Schedule::with('event', 'theater')->find($id);
+        if(!$schedule) {
             return response()->json([
                 "error" => "not_found",
                 "error_message" => "The requested resource was not found"
             ], 404);
         }
-        $reviewsCount = $event->reviewsCount();
-        $event['reviewsCount'] =  $reviewsCount;
-        return response()->json($event);
+        return response()->json($schedule);
     }
 
     /**

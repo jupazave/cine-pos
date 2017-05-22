@@ -16,7 +16,7 @@ class Event extends Model
     }
 
     public function schedules(){
-        return $this->belongsToMany('App\Theater', 'schedules');
+        return $this->belongsToMany('App\Theater', 'schedules')->withPivot('id', 'stage', 'start_date', 'end_date')->withTimestamps();
     }
 
     public function reviewsCount() {

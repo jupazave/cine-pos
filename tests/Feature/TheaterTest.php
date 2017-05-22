@@ -161,7 +161,6 @@ class TheaterTest extends TestCase
             'name' => 'Raul Migdonio'
         ]);
 
-        $this->assertTrue($theater->id, $theater->id);
 
         $data = [
             'name' => 'Not Raul Migdonio',

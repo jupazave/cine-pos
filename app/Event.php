@@ -10,6 +10,16 @@ class Event extends Model
     public function category() {
 		return $this->belongsTo('App\Category');
 	}
+
+    public function reviews() {
+        return $this->hasMany('App\Review');
+    }
+
+    public function reviewsCount() {
+        return $this->reviews()->count();
+    }
+
+
     protected $guarded = [];
 
     public static $createRules = [

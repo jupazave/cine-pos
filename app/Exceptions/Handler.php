@@ -87,10 +87,6 @@ class Handler extends ExceptionHandler
             }
 
         }
-        //404
-        if ($exception instanceof NotFoundHttpException) {
-        }
-
 
         return parent::render($request, $exception);
     }
@@ -107,6 +103,7 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
+        
 
         return redirect()->guest(route('login'));
     }

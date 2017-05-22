@@ -62,6 +62,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        $credentials = Input::only('email', 'password');
+
+        try {
+            $user = User::create($credentials);
+        } catch (Exception $e) {
+            return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
+        }
+
+        $token = JWTAuth::fromUser($user);
+
+        return Response::json(compact('token'));
+
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

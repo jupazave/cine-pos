@@ -180,7 +180,7 @@ class ReviewTest extends TestCase {
      *
      * return @void
      */
-    public function destroy_an_event() {
+    public function destroy_a_review() {
 
         $event = factory(Event::class)->create();
         $review = factory(Review::class)->create([
@@ -200,7 +200,7 @@ class ReviewTest extends TestCase {
      *
      * @return void
      */
-    public function get_404_to_undefined_event_id_on_destroy() {
+    public function get_404_to_undefined_review_id_on_destroy() {
 
         $event = factory(Event::class)->create();
         $review = factory(Review::class)->create([

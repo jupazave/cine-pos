@@ -23,6 +23,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::resource('events', 'EventController');
         Route::resource('categories', 'CategoryController');
         Route::resource('reviews', 'ReviewController');
+        Route::resource('schedules', 'ScheduleController');
+
+        Route::get('theaters/:theater_id/schedules', ['as' => 'theaters.schedules', 'uses' => 'TheaterController@getSchedules']);
     });
 
     Route::group(['prefix' => 'auth'], function () {

@@ -12,7 +12,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class TheaterTest extends TestCase
 {
     use DatabaseMigrations;
-    use WithoutMiddleware;
 
     /**
      * @test
@@ -20,10 +19,13 @@ class TheaterTest extends TestCase
      * @return void
      */
     public function get_first_page_theaters_with_default_limit_of_15() {
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        factory(Theater::class, 20)->create([
+            'user_id' => $user->id
+        ]);
 
-        factory(Theater::class, 20)->create();
-
-        $response = $this->json('get',route('theaters.index'));
+        $response = $this->json('get',route('theaters.index'), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -38,12 +40,16 @@ class TheaterTest extends TestCase
      * @return void
      */
     public function get_third_page_theaters_with_custom_limit() {
-        factory(Theater::class, 20)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        factory(Theater::class, 20)->create([
+            'user_id' => $user->id
+        ]);
 
         $response = $this->json('get', route('theaters.index', [
             'limit' => 5,
             'page' => 3
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -62,12 +68,16 @@ class TheaterTest extends TestCase
      * @return void
      */
     public function get_empty_page_theaters() {
-        factory(Theater::class, 10)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        factory(Theater::class, 10)->create([
+            'user_id' => $user->id
+        ]);
 
         $response = $this->json('get', route('theaters.index', [
             'limit' => 9,
             'page' => 2
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -85,13 +95,16 @@ class TheaterTest extends TestCase
      * return @void
      */
     public function get_single_theater_info() {
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
         $theater = factory(Theater::class)->create([
+            'user_id' => $user->id,
             'name' => 'Raul Migdonio'
         ]);
 
         $response = $this->json('get', route('theaters.show',[
             'id' => $theater->id
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -105,13 +118,16 @@ class TheaterTest extends TestCase
      * return @void
      */
     public function get_404_to_undefined_theater_id() {
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
         $theater = factory(Theater::class)->create([
+            'user_id' => $user->id,
             'name' => 'Raul Migdonio'
         ]);
 
         $response = $this->json('get', route('theaters.show', [
            'id' => $theater->id+1
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(404);
         $response->assertJsonStructure([
@@ -125,7 +141,8 @@ class TheaterTest extends TestCase
      * return @void
      */
     public function create_a_theater() {
-        $user = factory(User::class)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
         $data = [
             "name" => "Armando Manzanero",
             "description"=> "White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
@@ -142,7 +159,7 @@ class TheaterTest extends TestCase
             "user_id"=> $user->id
         ];
 
-        $response = $this->json('post', route('theaters.store'), $data);
+        $response = $this->json('post', route('theaters.store'), $data, $headers);
 
         $response->assertStatus(201);
         $response->assertJson([
@@ -156,8 +173,10 @@ class TheaterTest extends TestCase
      * return @void
      */
     public function update_a_theater() {
-
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
         $theater = factory(Theater::class)->create([
+            'user_id' => $user->id,
             'name' => 'Raul Migdonio'
         ]);
 
@@ -168,7 +187,7 @@ class TheaterTest extends TestCase
 
         $response = $this->json('put', route('theaters.update', [
             'id' => $theater->id
-        ]), $data);
+        ]), $data, $headers);
 
         $response->assertStatus(200);
         $response->assertJson([

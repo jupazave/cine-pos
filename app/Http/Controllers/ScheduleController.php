@@ -42,7 +42,7 @@ class ScheduleController extends Controller
                 ->with('event')
                 ->paginate($this->limit);
 
-        } else if($this->category_id !== null) {
+        } else if($this->category_id !== 0) {
             $schedules = Schedule::whereHas('event', function($query) {
                     $query->where('category_id', $this->category_id);
                 })

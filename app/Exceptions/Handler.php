@@ -47,12 +47,12 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         /*dd($exception instanceof HttpException);*/
-        if ($exception instanceof ValidationException) {
+        /*if ($exception instanceof ValidationException) {
             return response()->json([
                 'error' => 'bad_request',
                 'error_message' => 'Usually caused by invalid input data (missing arguments, invalid arguments values, etc.). Cause of error is described in response.'
             ], 400);
-        }
+        }*/
         if ($exception instanceof HttpException) {
             switch ($exception->getStatusCode()) {
                 case 400: {

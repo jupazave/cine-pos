@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Schedule;
-use App\Event;
-use App\Http\Requests\Event\CreateScheduleRequest;
-use App\Http\Requests\Event\UpdateScheduleRequest;
 use Carbon\Carbon;
+use App\Http\Requests\Schedule\CreateScheduleRequest;
+use App\Http\Requests\Schedule\UpdateScheduleRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\DB;
 
 class ScheduleController extends Controller
 {
@@ -83,21 +81,21 @@ class ScheduleController extends Controller
      * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
-        $event->fill($request->all())->save();
-        return response()->json($event, 200);
+        $schedule->fill($request->all())->save();
+        return response()->json($schedule, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Theater  $event
+     * @param  \App\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $event = Event::destroy($id);
-        if(!$event) {
+        $schedule = Schedule::destroy($id);
+        if(!$schedule) {
             return response()->json([
                 "error" => "not_found",
                 "error_message" => "The requested resource was not found"

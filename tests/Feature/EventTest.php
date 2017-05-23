@@ -13,7 +13,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class EventTest extends TestCase
 {
     use DatabaseMigrations;
-    use WithoutMiddleware;
 
     /**
      * @test
@@ -21,9 +20,13 @@ class EventTest extends TestCase
      * @return void
      */
     public function get_first_page_events_with_default_limit_of_15() {
-        factory(Event::class, 20)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        factory(Event::class, 20)->create([
+            'user_id' => $user->id
+        ]);
 
-        $response = $this->json('get',route('events.index'));
+        $response = $this->json('get',route('events.index'), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -38,12 +41,16 @@ class EventTest extends TestCase
      * @return void
      */
     public function get_third_page_events_with_custom_limit() {
-        factory(Event::class, 20)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        factory(Event::class, 20)->create([
+            'user_id' => $user->id
+        ]);
 
         $response = $this->json('get', route('events.index', [
             'limit' => 5,
             'page' => 3
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -62,12 +69,16 @@ class EventTest extends TestCase
      * @return void
      */
     public function get_empty_page_events() {
-        factory(Event::class, 10)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        factory(Event::class, 10)->create([
+            'user_id' => $user->id
+        ]);
 
         $response = $this->json('get', route('events.index', [
             'limit' => 9,
             'page' => 2
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -84,10 +95,13 @@ class EventTest extends TestCase
      * @return void
      */
     public function fetch_an_event() {
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        $event = factory(\App\Event::class)->create([
+            'user_id' => $user->id
+        ]);
 
-        $event = factory(\App\Event::class)->create();
-
-        $response = $this->json('get',route('events.show', $event->id));
+        $response = $this->json('get',route('events.show', $event->id), [], $headers);
 
         $response->assertStatus(200);
 
@@ -104,9 +118,13 @@ class EventTest extends TestCase
      */
     public function get_404_to_undefined_event_id() {
 
-        $event = factory(\App\Event::class)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        $event = factory(\App\Event::class)->create([
+            'user_id' => $user->id
+        ]);
 
-        $response = $this->json('get',route('events.show', $event->id+1));
+        $response = $this->json('get',route('events.show', $event->id+1), [], $headers);
 
         $response->assertStatus(404);
 
@@ -121,8 +139,9 @@ class EventTest extends TestCase
       * @return void
       */
      public function create_an_event() {
+         $user = $this->createUser();
+         $headers = $this->getHeaderToken();
          $category = factory(Category::class)->create();
-         $user = factory(User::class)->create();
          $data = [
              'name' => 'El Rey Leon',
              'description' => 'Mock Turtle in the distance, screaming with passion. She had already heard her voice sounded hoarse and strange, and the March Hare',
@@ -139,7 +158,7 @@ class EventTest extends TestCase
              'user_id' => $user->id
          ];
 
-         $response = $this->json('post', route('events.store'), $data);
+         $response = $this->json('post', route('events.store'), $data, $headers);
 
          $response->assertStatus(201);
          $response->assertJson([
@@ -153,8 +172,10 @@ class EventTest extends TestCase
      * return @void
      */
     public function update_an_event() {
-
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
         $event = factory(Event::class)->create([
+            'user_id' => $user->id,
             'name' => 'El Rey Leon'
         ]);
 
@@ -164,7 +185,7 @@ class EventTest extends TestCase
 
         $response = $this->json('put', route('events.update', [
             'id' => $event->id
-        ]), $data);
+        ]), $data, $headers);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -178,12 +199,15 @@ class EventTest extends TestCase
      * return @void
      */
     public function destroy_an_event() {
-
-        $event = factory(Event::class)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        $event = factory(Event::class)->create([
+            'user_id' => $user->id
+        ]);
 
         $response = $this->json('delete', route('events.destroy', [
             'id' => $event->id
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(204);
     }
@@ -194,12 +218,15 @@ class EventTest extends TestCase
      * @return void
      */
     public function get_404_to_undefined_event_id_on_destroy() {
-
-        $event = factory(Event::class)->create();
+        $user = $this->createUser();
+        $headers = $this->getHeaderToken();
+        $event = factory(Event::class)->create([
+            'user_id' => $user->id
+        ]);
 
         $response = $this->json('delete', route('events.destroy', [
             'id' => $event->id+1
-        ]));
+        ]), [], $headers);
 
         $response->assertStatus(404);
 

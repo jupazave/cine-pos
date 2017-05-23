@@ -24,14 +24,18 @@ class ScheduleTest extends TestCase
      * @return void
      */
     public function get_first_page_schedules_with_default_limit_of_15() {
-        $now = Carbon::now()->toDateTimeString();
-        factory(Schedule::class, 20)->create();
+        $now = Carbon::now()->addHour(1)->toDateTimeString();
+        $endNow = Carbon::now()->addHour(10)->toDateTimeString();
+        factory(Schedule::class)->create([
+            'start_date' => $now,
+            'end_date' => $endNow
+        ]);
 
         $response = $this->json('get',route('schedules.index'));
 
         $response->assertStatus(200);
         $response->assertJson([
-            'total' => 20,
+            'total' => 1,
             'per_page' => 15
         ]);
     }

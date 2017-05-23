@@ -42,7 +42,7 @@ class ScheduleController extends Controller
                 ->with('event')
                 ->paginate($this->limit);
 
-        } else if($this->category_id !== null) {
+        } else if($this->category_id !== 0) {
             $schedules = Schedule::whereHas('event', function($query) {
                     $query->where('category_id', $this->category_id);
                 })
@@ -94,10 +94,7 @@ class ScheduleController extends Controller
     public function show($id) {
         $schedule = Schedule::with('event', 'theater')->find($id);
         if(!$schedule) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
         return response()->json($schedule);
     }
@@ -109,8 +106,12 @@ class ScheduleController extends Controller
      * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateScheduleRequest $request, Schedule $schedule)
+    public function update(UpdateScheduleRequest $request, $id)
     {
+        $schedule = Schedule::find($id);
+        if(!$schedule) {
+            abort(404);
+        }
         $this->request = $request;
         
         $schedulesOfSameTheater = Schedule::whereHas('theater', function($query) {
@@ -139,10 +140,7 @@ class ScheduleController extends Controller
     public function destroy($id) {
         $schedule = Schedule::destroy($id);
         if(!$schedule) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
 
         return response(null, 204);

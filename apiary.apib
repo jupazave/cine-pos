@@ -38,6 +38,7 @@ The API can answer with the following HTTP codes. Only 20x codes are successfull
 <tr><td>401 Unauthorized</td><td>Authentication failed.</td></tr>
 <tr><td>403 Forbidden</td><td>You don't have access to resource.</td></tr>
 <tr><td>404 Not Found</td><td>You're asking for something that doesn't exist.</td></tr>
+<tr><td>405 Method not allowed</td><td>You don't have access to this method.</td></tr>
 <tr><td>422 Unprocessable Entity</td><td> The server understands the content type of the request entity but there is a format error.</td></tr>
 <tr><td>500 Internal Server Error</td><td>Something went wrong. We are sorry, it is our fault and we will make our best to fix it!</td></tr>
 <tr><td>503 Temporary Unavailable</td><td>This response is typically returned when system is under maintenance. Maintenance reason and expected maintenance ent time are also returned in response. </td></tr>
@@ -247,6 +248,21 @@ Collection of all Theaters
             ]
         }
 
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 ### Create a Theater [POST]
 + Request (application/json)
     + Headers 
@@ -296,6 +312,21 @@ Collection of all Theaters
         [
           "The name has already been taken."
         ]
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ## Theater [/theater/{id}]
 A single Theater object with all its details
@@ -342,8 +373,23 @@ A single Theater object with all its details
                 "error": "not_found",
                 "error_message": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update a Theater [PUT]
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### Update a Theater [PATCH]
 + Request (application/json)
     + Headers
     
@@ -372,6 +418,21 @@ A single Theater object with all its details
         [
           "The name has already been taken."
         ]
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ### Remove a Theater [DELETE]
 + Response 204
@@ -385,6 +446,29 @@ A single Theater object with all its details
                 "error_message": "The requested resource was not found"
             }
 
++ Response 405 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_message": "You don't have access to this method"
+            }
+
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 # Group Event
 
@@ -451,6 +535,21 @@ Collection of all Events of a theater
                 }
             ]
         }
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ### Create an Event [POST]
 + Request (application/json)
@@ -488,6 +587,21 @@ Collection of all Events of a theater
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
         }
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ## Event [/events/{id}]
 A single Event object with all its details
@@ -522,6 +636,21 @@ A single Event object with all its details
                 "updated_at": "2017-04-14 13:47:01"
             }
             
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+            
 ### Retrieve an Event [GET]
 
 + Response 200 (application/json)
@@ -536,8 +665,23 @@ A single Event object with all its details
                 "error": "not_found",
                 "error_description": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update an Event [PUT]
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### Update an Event [PATCH]
 + Request (application/json)
 
         {
@@ -553,9 +697,40 @@ A single Event object with all its details
 + Response 201 (application/json)
 
     [Event][]
+    
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
         
 ### Remove an Event [DELETE]
 + Response 204
+
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 
 # Group Reviews
 
@@ -601,6 +776,21 @@ Collection of all reviews of an event
             ]
         }
 
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 ### Create a Review [POST]
 + Request (application/json)
 
@@ -620,6 +810,21 @@ Collection of all reviews of an event
             "description": "Excelente actuación"
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 ## Review [/event/{event_id}/review/{review_id}]
@@ -659,28 +864,41 @@ A single Review object with all its details
                 "error": "not_found",
                 "error_description": "The requested resource was not found"
             }
-
-### Update a Review [PUT]
-+ Request (application/json)
+            
++ Response 400 (application/json)
 
         {
-            "id": 1, 
-            "event_id": 1,
-            "score": 5,
-            "name":"Joshua Flores Tuz",
-            "description": "Excelente actuación"
-            "start_date": "2017-02-20 17:09:07",
-            "end_date": "2017-02-20 17:09:07"
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
         }
 
-+ Response 201 (application/json)
 
-    [Event][]
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
         
 ### Remove a Review [DELETE]
 Logged user must have rol admi
 
 + Response 204
+
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 # Group Categories
 
@@ -721,6 +939,21 @@ Collection of all categories
                 }
             ]
         }
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ### Create a Category [POST]
 + Request (application/json)
@@ -737,6 +970,21 @@ Collection of all categories
             "description": "Fantasía",
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 ## Category [/category/{category_id}]
@@ -773,8 +1021,23 @@ A single Category object with all its details
                 "error": "not_found",
                 "error_description": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update a Category [PUT]
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### Update a Category [PATCH]
 + Request (application/json)
 
         {
@@ -785,6 +1048,21 @@ A single Category object with all its details
 + Response 201 (application/json)
 
     [Category][]
+    
++ Response 400 (application/json)
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
         
 ### Remove a Category [DELETE]
 + Response 204
@@ -850,63 +1128,8 @@ Collection of all schedules
 + Response 200 (application/json)
 
         {
-            "total": 1,
-            "per_page": 1,
-            "current_page": 1,
-            "last_page": 1,
-            "next_page_url": null,
-            "prev_page_url": null,
-            "from": 1,
-            "to": 1,
-            "data": [
-                {
-                    "id": 1,
-                    "stage": "ut",
-                    "start_date": "2017-04-26 05:13:45",
-                    "end_date": "2017-04-26 05:13:45",
-                    "event_id": 22,
-                    "theater_id": 18,
-                    "created_at": "2017-05-23 04:05:26",
-                    "updated_at": "2017-05-23 04:05:26",
-                    "event": {
-                        "id": 22,
-                        "name": "CHAPTER VI. Pig and Pepper For a minute or two to think about it, even if my head would go.",
-                        "description": "Then she went nearer to watch them, and then turned to the puppy; whereupon the puppy made another snatch in the pool, 'and she sits purring so nicely by the carrier,' she thought; 'and how funny.",
-                        "dramaturgic": "Mrs. Annamarie Morar II",
-                        "director": "Iliana Tremblay Jr.",
-                        "cast": "Ms. Virginie Wiza,Ms. Wilhelmine Schiller,Leo Zulauf,Gloria Lubowitz,Anabel Lesch,Sherwood Bahringer",
-                        "email": "orville.abernathy@cruickshank.com",
-                        "facebook": "http://smitham.com/aut-ut-et-voluptatem-quod-pariatur",
-                        "instagram": "http://smitham.com/ab-dolores-eius-maxime-deleniti-qui-voluptas-est.html",
-                        "twitter": "http://glover.com/",
-                        "webpage": "http://gerhold.com/ea-qui-quisquam-vitae-quaerat-ullam-molestiae-voluptatem",
-                        "profile_picture": "http://lorempixel.com/640/480/?37124",
-                        "category_id": 2,
-                        "user_id": 3,
-                        "created_at": "2017-05-23 04:05:23",
-                        "updated_at": "2017-05-23 04:05:23"
-                    },
-                    "theater": {
-                        "id": 18,
-                        "name": "Would the fall was over. Alice was thoroughly puzzled. 'Does the boots and shoes!' she repeated in.",
-                        "description": "White Rabbit hurried by--the frightened Mouse splashed his way through the wood. 'It's the Cheshire Cat, she was ready to agree to everything that was lying under the hedge. In another moment down.",
-                        "address": "185 Littel Hills\nLemkebury, OK 76800-2570",
-                        "zip_code": "43601",
-                        "city": "New Gageside",
-                        "country": "Burkina Faso",
-                        "phone": "1-541-830-0929 x05312",
-                        "email": "uschneider@baumbach.com",
-                        "facebook": "http://www.schuster.com/sint-quia-ratione-a-sequi-rerum-animi-numquam-consectetur.html",
-                        "instagram": "http://www.carroll.net/hic-repellat-dolorum-dolor-et-aspernatur-hic-facilis-eius.html",
-                        "twitter": "http://www.hilpert.biz/nemo-eius-est-expedita-cupiditate-non",
-                        "webpage": "http://luettgen.com/",
-                        "profile_picture": "http://lorempixel.com/640/480/?50158",
-                        "user_id": 7,
-                        "created_at": "2017-05-23 04:05:22",
-                        "updated_at": "2017-05-23 04:05:22"
-                    }
-                }
-            ]
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
         }
 
 ### Create a Schedule [POST]

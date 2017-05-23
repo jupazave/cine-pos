@@ -184,63 +184,6 @@ class ScheduleTest extends TestCase
      *
      * return @void
      */
-    public function update_a_schedule_with_end_date_before_start_date() {
-
-        $schedule = factory(Schedule::class)->create([
-            "start_date" => "2018-11-24 09:59:56",
-            "end_date" => "2018-11-24 11:59:56"
-        ]);
-
-        $data = [
-            "end_date" => "2018-11-24 07:59:56"
-        ];
-
-        $response = $this->json('put', route('schedules.update', [
-            'id' => $schedule->id
-        ]), $data);
-
-        $response->assertStatus(422);
-        $response->assertJson([
-            "The end date must be a date after start date."
-        ]);
-    }
-
-    /**
-     * @test
-     *
-     * return @void
-     */
-    public function update_a_schedule_with_collision() {
-
-        $storedSchedule = factory(Schedule::class)->create([
-            "start_date" => "2018-11-24 06:59:56",
-            "end_date" => "2018-11-24 09:59:56"
-         ]);
-
-        $schedule = factory(Schedule::class)->create([
-            "start_date" => "2018-11-24 10:00:00",
-            "end_date" => "2018-11-24 11:59:56"
-        ]);
-
-        $data = [
-            "start_date" => "2018-11-24 09:00:00",
-        ];
-
-        $response = $this->json('put', route('schedules.update', [
-            'id' => $schedule->id
-        ]), $data);
-
-        $response->assertStatus(400);
-        $response->assertJsonStructure([
-            'error','error_message'
-        ]);
-    }
-
-    /**
-     * @test
-     *
-     * return @void
-     */
     public function destroy_a_schedule() {
 
         $schedule = factory(Schedule::class)->create();

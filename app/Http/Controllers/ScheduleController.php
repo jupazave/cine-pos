@@ -106,8 +106,12 @@ class ScheduleController extends Controller
      * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateScheduleRequest $request, Schedule $schedule)
+    public function update(UpdateScheduleRequest $request, $id)
     {
+        $schedule = Schedule::find($id);
+        if(!$schedule) {
+            abort(404);
+        }
         $this->request = $request;
         
         $schedulesOfSameTheater = Schedule::whereHas('theater', function($query) {

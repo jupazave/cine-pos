@@ -29,6 +29,9 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+        $user = $this->getUser($request);
+        if($user->role != 'admin') abort(403);
+
         $theater = new Category($request->all());
         $theater->save();
         return response()->json($theater, 201);
@@ -58,6 +61,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
+
+        $user = $this->getUser($request);
+        if($user->role != 'admin') abort(403);
+
         $category = Category::find($id);
         if (!$category) {
             abort(404);
@@ -72,13 +79,28 @@ class CategoryController extends Controller
      * @param  \App\Category $theater
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Reuqest $request, $id)
     {
+
+        $user = $this->getUser($request);
+
+        if($user->role != 'admin') abort(403);
+
         $theater = Category::destroy($id);
         if (!$theater) {
             abort(404);
         }
 
         return response(null, 204);
+    }
+
+    private function getUser($request) {
+        $user = null;
+        if($request->attributes->get('user')) {
+            $user = $request->attributes->get('user');
+        } else {
+            abort(403);
+        }
+        return $user;
     }
 }

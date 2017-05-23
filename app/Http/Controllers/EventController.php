@@ -64,10 +64,16 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, $id)
     {
+        $user = $this->getUser($request);
         $event = Event::find($id);
         if(!$event) {
             abort(404);
         }
+
+        if($user->id != $event->user_id) {
+            abort(403);
+        }
+
         $event->fill($request->all())->save();
         return response()->json($event, 200);
     }
@@ -85,5 +91,15 @@ class EventController extends Controller
         }
 
         return response(null, 204);
+    }
+
+    private function getUser($request) {
+        $user = null;
+        if($request->attributes->get('user')) {
+            $user = $request->attributes->get('user');
+        } else {
+            abort(403);
+        }
+        return $user;
     }
 }

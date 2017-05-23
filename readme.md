@@ -22,15 +22,14 @@ Clonar el repositorio de github
 git clone git@github.com:jupazave/cine-pos.git
 ```
 
-instalar las dependencias con
+Instalar las dependencias con
 
 ```bash
 composer install
 
 ```
 
-Es recomendable el uso de Homestead para una mejor fiabilidad del entorno de desarrollo
-a continuación se mostrará una configuración del archivo Homestead.yaml para tomar de base
+Es recomendable el uso de Homestead para una mejor fiabilidad del entorno de desarrollo a continuación se mostrará una configuración del archivo Homestead.yaml para tomar de base
 
 ```text
 ip: "192.168.10.10"
@@ -85,9 +84,7 @@ http://cinepos.app/
 
 ## Pruebas
 
-Para correr las pruebas es necesario saber donde esta ubicada la base de datos, si la base de datos
-esta ubicada en la maquina Homestead, lo mejor es correrlas en la misma, en caso de que no se este
-utilizando correrlas normalmente
+Para correr las pruebas es necesario saber donde esta ubicada la base de datos, si la base de datos esta ubicada en la maquina Homestead, lo mejor es correrlas en la misma, en caso de que no se este utilizando correrlas normalmente.
 
 ### Postman
 
@@ -101,8 +98,7 @@ Entrar a la maquina homestead por ssh
 vagrant ssh
 ```
 
-Ahora ingresar a la carpeta del proyecto en la consola, una vez dentro, podremos
-usar el siguiente comando para correr las pruebas automatizadas
+Ahora ingresar a la carpeta del proyecto en la consola, una vez dentro, podremos usar el siguiente comando para correr las pruebas automatizadas
 
 ```bash
 vendor/bin/phpunit
@@ -126,8 +122,7 @@ PHPUnit 5.7.19 by Sebastian Bergmann and contributors.
 Error:         No code coverage driver is available
 ```
 
-El error no afecta a la ejecucion de las pruebas, pero para poder hacer `code coverage` es necesario habilitar
-un modulo de php ya instalado por defecto en Homestead, para poder habilitarlo usar el siguiente comando
+El error no afecta a la ejecucion de las pruebas, pero para poder hacer `code coverage` es necesario habilitar un modulo de php ya instalado por defecto en Homestead, para poder habilitarlo usar el siguiente comando
 
 ```bash
 sudo phpdismod xdebug
@@ -143,8 +138,7 @@ Generando una carpeta `folder` en la raiz del proyecto en la que estara de maner
 
 ##### ADVERTENCIA
 
-Utilizar el modulo `xdebug` disminuye el rendimiento hasta 3 o 5 veces los programas como `composer` o `phpunit`
- razon por la cual el modulo esta desactivado por defecto, para poder desactivarlo de nuevo utilizar el siguiente comando
+Utilizar el modulo `xdebug` disminuye el rendimiento hasta 3 o 5 veces los programas como `composer` o `phpunit` razon por la cual el modulo esta desactivado por defecto, para poder desactivarlo de nuevo utilizar el siguiente comando
  
  ```bash
  sudo phpdismod xdebug

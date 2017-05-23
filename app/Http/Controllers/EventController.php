@@ -62,8 +62,12 @@ class EventController extends Controller
      * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, $id)
     {
+        $event = Event::find($id);
+        if(!$event) {
+            abort(404);
+        }
         $event->fill($request->all())->save();
         return response()->json($event, 200);
     }

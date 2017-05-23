@@ -5,7 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,48 +46,57 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        /*switch ($exception->getStatusCode()) {
-            case 400: {
-                return response()->json([
-                    'error' => 'bad_request',
-                    'error_message' => 'Usually caused by invalid input data (missing arguments, invalid arguments 
+        /*dd($exception instanceof HttpException);*/
+        if ($exception instanceof ValidationException) {
+            return response()->json([
+                'error' => 'bad_request',
+                'error_message' => 'Usually caused by invalid input data (missing arguments, invalid arguments values, etc.). Cause of error is described in response.'
+            ], 400);
+        }
+        if ($exception instanceof HttpException) {
+            switch ($exception->getStatusCode()) {
+                case 400: {
+                    return response()->json([
+                        'error' => 'bad_request',
+                        'error_message' => 'Usually caused by invalid input data (missing arguments, invalid arguments
                     values, etc.). Cause of error is described in response.'
-                ]);
-            }
-            case 401: {
-                return response()->json([
-                    'error' => 'unauthorized',
-                    'error_message' => 'Authentication failed.'
-                ]);
-            }
-            case 403: {
-                return response()->json([
-                    'error' => 'forbidden',
-                    'error_message' => 'You don\'t have access to resource.'
-                ]);
-            }
-            case 404: {
-                return response()->json([
-                    "error" => "not_found",
-                    "error_message" => 'You\'re asking for something that doesn\'t exist.'
-                ], 404);
-            }
-            case 500: {
-                return response()->json([
-                    'error' => 'internal_server_error',
-                    'error_message' => 'Something went wrong. We are sorry, it is our fault and we will 
+                    ], 400);
+                }
+                case 401: {
+                    return response()->json([
+                        'error' => 'unauthorized',
+                        'error_message' => 'Authentication failed.'
+                    ], 401);
+                }
+                case 403: {
+                    return response()->json([
+                        'error' => 'forbidden',
+                        'error_message' => 'You don\'t have access to resource.'
+                    ], 403);
+                }
+                case 404: {
+                    return response()->json([
+                        "error" => "not_found",
+                        "error_message" => 'You\'re asking for something that doesn\'t exist.'
+                    ], 404);
+                }
+                case 500: {
+                    return response()->json([
+                        'error' => 'internal_server_error',
+                        'error_message' => 'Something went wrong. We are sorry, it is our fault and we will
                     make our best to fix it!'
-                ]);
-            }
-            case 503: {
-                return response()->json([
-                    'error' => 'temporary_unavailable',
-                    'error_message' => 'This response is typically returned when system is under maintenance. 
+                    ], 500);
+                }
+                case 503: {
+                    return response()->json([
+                        'error' => 'temporary_unavailable',
+                        'error_message' => 'This response is typically returned when system is under maintenance.
                     Maintenance reason and expected maintenance ent time are also returned in response.'
-                ]);
-            }
+                    ], 503);
+                }
 
-        }*/
+            }
+        }
 
         return parent::render($request, $exception);
     }
@@ -101,9 +111,12 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+            return response()->json([
+                'error' => 'unauthorized',
+                'error_message' => 'Authentication failed.'
+            ], 401);
         }
-        
+
 
         return redirect()->guest(route('login'));
     }

@@ -52,8 +52,12 @@ class TheaterController extends Controller
      * @param  \App\Theater  $theater
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTheaterRequest $request, Theater $theater)
+    public function update(UpdateTheaterRequest $request, $id)
     {
+        $theater = Theater::find($id);
+        if(!$theater) {
+            abort(404);
+        }
         $theater->fill($request->all())->save();
         return response()->json($theater, 200);
     }

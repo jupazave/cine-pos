@@ -47,9 +47,10 @@ class ReviewController extends Controller {
      * @param  \App\Review  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        $review = Review::find($id);
+    public function show($event_id, $id) {
+        $review = Review::with('event')->find($id);
         if(!$review) {
+            abort(404);
             return response()->json([
                 "error" => "not_found",
                 "error_message" => "The requested resource was not found"
@@ -65,32 +66,19 @@ class ReviewController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $event_id, $id) {
-        /*dd($request->attributes->get('user'));*/
-
         $user = $this->getUser($request);
 
-
-
-        $event = Event::with('reviews')->find($event_id);
-
-        if($user->id != $event->user_id) {
-            return response()->json([
-                "error" => "forbidden",
-                "error_message" => "The requested resource was not found"
-            ], 403);
+        $dReview = Review::find($id);
+        if(!$dReview) {
+            abort(404);
         }
-        dd($user->id, $event->user_id);
-
-
-        dd($event);
-
-        dd($event_id, $id);
+        $event = Event::with('reviews')->find($event_id);
+        if($user->id != $event->user_id) {
+            abort(403);
+        }
         $review = Review::destroy($id);
         if(!$review) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
 
         return response(null, 204);
@@ -100,6 +88,8 @@ class ReviewController extends Controller {
         $user = null;
         if($request->attributes->get('user')) {
             $user = $request->attributes->get('user');
+        } else {
+            abort(403);
         }
         return $user;
     }

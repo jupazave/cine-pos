@@ -26,9 +26,6 @@ class Theater extends Model
         'city' => 'required|min:2|max:50',
         'country' => 'required|min:2|max:50',
         'email' => 'email',
-        'facebook' => 'url',
-        'instagram' => 'url',
-        'twitter' => 'url',
         'webpage' => 'url',
         'profile_picture' => 'url'
     ];
@@ -42,9 +39,6 @@ class Theater extends Model
         'city' => 'min:2|max:50',
         'country' => 'min:2|max:50',
         'email' => 'email',
-        'facebook' => 'url',
-        'instagram' => 'url',
-        'twitter' => 'url',
         'webpage' => 'url',
         'profile_picture' => 'url'
     ];

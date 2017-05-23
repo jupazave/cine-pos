@@ -32,9 +32,6 @@ class Event extends Model
         'director' => 'required',
         'cast' => 'required',
         'email' => 'email',
-        'facebook' => 'url',
-        'instagram' => 'url',
-        'twitter' => 'url',
         'webpage' => 'url',
         'category_id' => 'required'
     ];
@@ -43,9 +40,6 @@ class Event extends Model
         'name' => 'min:3|max:35',
         'description' => 'nullable|min:5',
         'email' => 'nullable|email',
-        'facebook' => 'nullable|url',
-        'instagram' => 'nullable|url',
-        'twitter' => 'nullable|url',
         'webpage' => 'nullable|url',
     ];
 }

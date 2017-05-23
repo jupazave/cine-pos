@@ -185,7 +185,8 @@ class CategoryTest extends TestCase
     private function createUser() {
         $user = factory(User::class)->create([
             'username' => 'usr',
-            "password" => bcrypt("secret")
+            "password" => bcrypt("secret"),
+            "role" => 'admin'
         ]);
 
         return $user;

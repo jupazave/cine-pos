@@ -1,7 +1,5 @@
 # Escena Descubierta
 
-![Travis CI](https://travis-ci.org/jupazave/cine-pos.svg?branch=master "Travis CI")
-
 ## Requerimientos
 
 Para poder correr el proyecto es necesario lo siguiente
@@ -16,7 +14,7 @@ Para poder correr el proyecto es necesario lo siguiente
 
 \* Recomendado
 
-## Instalacion
+## Instalación
 
 Clonar el repositorio de github
 
@@ -28,10 +26,11 @@ instalar las dependencias con
 
 ```bash
 composer install
+
 ```
 
 Es recomendable el uso de Homestead para una mejor fiabilidad del entorno de desarrollo
-a continuacion se mostrara una configuracion del archivo Homestead.yaml para tomar de base
+a continuación se mostrará una configuración del archivo Homestead.yaml para tomar de base
 
 ```text
 ip: "192.168.10.10"
@@ -56,6 +55,12 @@ databases:
     - cinepos
 ```
 
+Para mantener congurencia, usaremos una base de datos con el nombre 
+
+```text
+cinepos
+```
+
 ### Si la base de datos esta vacia
 
 Correr el siguiente comando para crear todas las tablas de la base de datos
@@ -72,16 +77,21 @@ Con el siguiente comando recreara la base de datos con sus seeders
 php artisan migrate:refresh --seed
 ```
 
+A partir de este punto, puedes empezar a consultar el API en el host
+
+```text
+http://cinepos.app/
+```
+
 ## Pruebas
 
 Para correr las pruebas es necesario saber donde esta ubicada la base de datos, si la base de datos
-esta ubicada en la maquina Homestead, lo mejor es correrlas desde ahi, en caso de que no se este
+esta ubicada en la maquina Homestead, lo mejor es correrlas en la misma, en caso de que no se este
 utilizando correrlas normalmente
 
 ### Postman
 
-La raiz del proyecto incluye el archivo `postman.json` para importar a postman las solicitudes ya implementadas,
-esta utiliza como host el definido en el Homestead.yaml, en este caso el host es `cinepos.app`
+En a raíz del proyecto se incluye el archivo `postman.json`. Para utilizarlas, mantendremos el mismo host que en el archivo `Homestead.yaml`, es decir `cinepos.app`
 
 #### Con Homestead
 
@@ -91,13 +101,9 @@ Entrar a la maquina homestead por ssh
 vagrant ssh
 ```
 
-ahora ingresar a la carpeta del proyecto en la consola, una vez dentro 
+Ahora ingresar a la carpeta del proyecto en la consola, una vez dentro, podremos
 usar el siguiente comando para correr las pruebas automatizadas
 
-```bash
-phpunit
-```
-o
 ```bash
 vendor/bin/phpunit
 ```
@@ -120,7 +126,7 @@ PHPUnit 5.7.19 by Sebastian Bergmann and contributors.
 Error:         No code coverage driver is available
 ```
 
-el error no afecta a la ejecucion de las pruebas, pero para poder hacer `code coverage` es necesario habilitar
+El error no afecta a la ejecucion de las pruebas, pero para poder hacer `code coverage` es necesario habilitar
 un modulo de php ya instalado por defecto en Homestead, para poder habilitarlo usar el siguiente comando
 
 ```bash
@@ -133,9 +139,9 @@ Si ejecutamos las pruebas de nuevo las pruebas, podremos observar como al termin
 Generating code coverage report in HTML format ... done
 ``` 
 
-generando una carpeta `folder` en la raiz del proyecto en la que estara de manera detallada el `code coverage` del proyecto
+Generando una carpeta `folder` en la raiz del proyecto en la que estara de manera detallada el `code coverage` del proyecto
 
-######ADVERTENCIA
+##### ADVERTENCIA
 
 Utilizar el modulo `xdebug` disminuye el rendimiento hasta 3 o 5 veces los programas como `composer` o `phpunit`
  razon por la cual el modulo esta desactivado por defecto, para poder desactivarlo de nuevo utilizar el siguiente comando

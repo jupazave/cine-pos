@@ -54,10 +54,16 @@ class TheaterController extends Controller
      */
     public function update(UpdateTheaterRequest $request, $id)
     {
+        $user = $this->getUser($request);
         $theater = Theater::find($id);
         if(!$theater) {
             abort(404);
         }
+
+        if($user->id != $theater->user_id) {
+            abort(403);
+        }
+
         $theater->fill($request->all())->save();
         return response()->json($theater, 200);
     }
@@ -68,12 +74,33 @@ class TheaterController extends Controller
      * @param  \App\Theater  $theater
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy(Request $request, $id) {
+        $user = $this->getUser($request);
+
+        $dTheater = Theater::find($id);
+        if($dTheater) {
+            abort(404);
+        }
+
+        $theater = Theater::find($id);
+        if($user->id != $theater->user_id) {
+            abort(403);
+        }
         $theater = Theater::destroy($id);
         if(!$theater) {
             abort(404);
         }
 
         return response(null, 204);
+    }
+
+    private function getUser($request) {
+        $user = null;
+        if($request->attributes->get('user')) {
+            $user = $request->attributes->get('user');
+        } else {
+            abort(403);
+        }
+        return $user;
     }
 }

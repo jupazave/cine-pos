@@ -80,7 +80,7 @@ class ScheduleController extends Controller
         } else {
             return response()->json([
                 "error" => "bad_request",
-                "error_message" => "The schedule has a collision whith existing schedule"
+                "error_message" => "The schedule has a collision with existing schedule"
             ], 400);
         }
     }
@@ -125,7 +125,7 @@ class ScheduleController extends Controller
         } else {
             return response()->json([
                 "error" => "bad_request",
-                "error_message" => "The schedule has a collision whith existing schedule"
+                "error_message" => "The schedule has a collision with existing schedule"
             ], 400);
         }
     }

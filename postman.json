@@ -577,6 +577,149 @@
 			]
 		},
 		{
+			"name": "Category",
+			"description": "",
+			"item": [
+				{
+					"name": "Index Category",
+					"request": {
+						"url": "http://cinepos.app/api/v1/categories",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Index Category [page,limit]",
+					"request": {
+						"url": "http://cinepos.app/api/v1/categories?page=2&limit=3",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Show Category",
+					"request": {
+						"url": "http://cinepos.app/api/v1/categories/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"url": "http://cinepos.app/api/v1/categories",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Armando Manzanero\",\n  \"description\": \"White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.\",\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"url": "http://cinepos.app/api/v1/categories/10",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Action\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Category",
+					"request": {
+						"url": "http://cinepos.app/api/v1/categories/9",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "User",
 			"description": "",
 			"item": [

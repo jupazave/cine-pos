@@ -910,7 +910,198 @@ A single Category object with all its details
 
 + Response 201 (application/json)
 
-    [Event][]
+    [Category][]
         
 ### Remove a Category [DELETE]
++ Response 204
+
+# Group Schedules
+
+## Schedules Collection [/schedules/]
+Collection of all categories
+
+### List all Schedules [GET]
+
++ Parameters
+    + page (required, number, `1`) ... The page number you want to get.
+    + category_id (optional, number, `1`) ... The category id number you want to get.
+    + startDate: `Y-m-d H:i:s` (optional, string) ... The min date to filter the events requested.
+    + endDate: `Y-m-d H:i:s` (optional, string) ... The max date to filter the events requested.
+
++ Response 200 (application/json)
+
+        {
+            "total": 1,
+            "per_page": 1,
+            "current_page": 1,
+            "last_page": 1,
+            "next_page_url": null,
+            "prev_page_url": null,
+            "from": 1,
+            "to": 1,
+            "data": [
+                {
+                    "id": 1,
+                    "stage": "ut",
+                    "start_date": "2017-04-26 05:13:45",
+                    "end_date": "2017-04-26 05:13:45",
+                    "event_id": 22,
+                    "theater_id": 18,
+                    "created_at": "2017-05-23 04:05:26",
+                    "updated_at": "2017-05-23 04:05:26",
+                    "event": {
+                        "id": 22,
+                        "name": "CHAPTER VI. Pig and Pepper For a minute or two to think about it, even if my head would go.",
+                        "description": "Then she went nearer to watch them, and then turned to the puppy; whereupon the puppy made another snatch in the pool, 'and she sits purring so nicely by the carrier,' she thought; 'and how funny.",
+                        "dramaturgic": "Mrs. Annamarie Morar II",
+                        "director": "Iliana Tremblay Jr.",
+                        "cast": "Ms. Virginie Wiza,Ms. Wilhelmine Schiller,Leo Zulauf,Gloria Lubowitz,Anabel Lesch,Sherwood Bahringer",
+                        "email": "orville.abernathy@cruickshank.com",
+                        "facebook": "http://smitham.com/aut-ut-et-voluptatem-quod-pariatur",
+                        "instagram": "http://smitham.com/ab-dolores-eius-maxime-deleniti-qui-voluptas-est.html",
+                        "twitter": "http://glover.com/",
+                        "webpage": "http://gerhold.com/ea-qui-quisquam-vitae-quaerat-ullam-molestiae-voluptatem",
+                        "profile_picture": "http://lorempixel.com/640/480/?37124",
+                        "category_id": 2,
+                        "user_id": 3,
+                        "created_at": "2017-05-23 04:05:23",
+                        "updated_at": "2017-05-23 04:05:23"
+                    },
+                    "theater": {
+                        "id": 18,
+                        "name": "Would the fall was over. Alice was thoroughly puzzled. 'Does the boots and shoes!' she repeated in.",
+                        "description": "White Rabbit hurried by--the frightened Mouse splashed his way through the wood. 'It's the Cheshire Cat, she was ready to agree to everything that was lying under the hedge. In another moment down.",
+                        "address": "185 Littel Hills\nLemkebury, OK 76800-2570",
+                        "zip_code": "43601",
+                        "city": "New Gageside",
+                        "country": "Burkina Faso",
+                        "phone": "1-541-830-0929 x05312",
+                        "email": "uschneider@baumbach.com",
+                        "facebook": "http://www.schuster.com/sint-quia-ratione-a-sequi-rerum-animi-numquam-consectetur.html",
+                        "instagram": "http://www.carroll.net/hic-repellat-dolorum-dolor-et-aspernatur-hic-facilis-eius.html",
+                        "twitter": "http://www.hilpert.biz/nemo-eius-est-expedita-cupiditate-non",
+                        "webpage": "http://luettgen.com/",
+                        "profile_picture": "http://lorempixel.com/640/480/?50158",
+                        "user_id": 7,
+                        "created_at": "2017-05-23 04:05:22",
+                        "updated_at": "2017-05-23 04:05:22"
+                    }
+                }
+            ]
+        }
+
+### Create a Schedule [POST]
++ Request (application/json)
+
+        {
+            "event_id": 2,
+            "theater_id": 2,
+            "stage": "Salón Principal",
+            "start_date": "2017-09-24 20:09:07",
+            "end_date": "2017-09-24 22:09:09"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 101
+            "event_id": 2,
+            "theater_id": 2,
+            "stage": "Salón Principal",
+            "start_date": "2017-09-24 20:09:07",
+            "end_date": "2017-09-24 22:09:09",
+            "updated_at": "2017-05-23 04:08:51",
+            "created_at": "2017-05-23 04:08:51",
+        }
+
+## Schedule [/schedule/{schedule_id}]
+A single Schedule object with all its details
+
++ Parameters
+    + schedule_id (required, number, `1`) ... Numeric `id` of the schedule to perform the action
+
++ Model (application/json)
+
+    JSON representation of the Schedule
+    
+    + Body
+
+            {
+                {
+                    "id": 1,
+                    "stage": "ut",
+                    "start_date": "2017-04-26 05:13:45",
+                    "end_date": "2017-04-26 05:13:45",
+                    "event_id": 22,
+                    "theater_id": 18,
+                    "created_at": "2017-05-23 04:05:26",
+                    "updated_at": "2017-05-23 04:05:26",
+                    "event": {
+                        "id": 22,
+                        "name": "CHAPTER VI. Pig and Pepper For a minute or two to think about it, even if my head would go.",
+                        "description": "Then she went nearer to watch them, and then turned to the puppy; whereupon the puppy made another snatch in the pool, 'and she sits purring so nicely by the carrier,' she thought; 'and how funny.",
+                        "dramaturgic": "Mrs. Annamarie Morar II",
+                        "director": "Iliana Tremblay Jr.",
+                        "cast": "Ms. Virginie Wiza,Ms. Wilhelmine Schiller,Leo Zulauf,Gloria Lubowitz,Anabel Lesch,Sherwood Bahringer",
+                        "email": "orville.abernathy@cruickshank.com",
+                        "facebook": "http://smitham.com/aut-ut-et-voluptatem-quod-pariatur",
+                        "instagram": "http://smitham.com/ab-dolores-eius-maxime-deleniti-qui-voluptas-est.html",
+                        "twitter": "http://glover.com/",
+                        "webpage": "http://gerhold.com/ea-qui-quisquam-vitae-quaerat-ullam-molestiae-voluptatem",
+                        "profile_picture": "http://lorempixel.com/640/480/?37124",
+                        "category_id": 2,
+                        "user_id": 3,
+                        "created_at": "2017-05-23 04:05:23",
+                        "updated_at": "2017-05-23 04:05:23"
+                    },
+                    "theater": {
+                        "id": 18,
+                        "name": "Would the fall was over. Alice was thoroughly puzzled. 'Does the boots and shoes!' she repeated in.",
+                        "description": "White Rabbit hurried by--the frightened Mouse splashed his way through the wood. 'It's the Cheshire Cat, she was ready to agree to everything that was lying under the hedge. In another moment down.",
+                        "address": "185 Littel Hills\nLemkebury, OK 76800-2570",
+                        "zip_code": "43601",
+                        "city": "New Gageside",
+                        "country": "Burkina Faso",
+                        "phone": "1-541-830-0929 x05312",
+                        "email": "uschneider@baumbach.com",
+                        "facebook": "http://www.schuster.com/sint-quia-ratione-a-sequi-rerum-animi-numquam-consectetur.html",
+                        "instagram": "http://www.carroll.net/hic-repellat-dolorum-dolor-et-aspernatur-hic-facilis-eius.html",
+                        "twitter": "http://www.hilpert.biz/nemo-eius-est-expedita-cupiditate-non",
+                        "webpage": "http://luettgen.com/",
+                        "profile_picture": "http://lorempixel.com/640/480/?50158",
+                        "user_id": 7,
+                        "created_at": "2017-05-23 04:05:22",
+                        "updated_at": "2017-05-23 04:05:22"
+                    }
+                }
+            }
+            
+### Retrieve a Schedule [GET]
+
++ Response 200 (application/json)
+
+    [Schedule][]
+
++ Response 404 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_description": "The requested resource was not found"
+            }
+
+### Update a Schedule [PATCH]
++ Request (application/json)
+
+        {
+            "id": 1, 
+            "name": "Comedia"
+        }
+
++ Response 201 (application/json)
+
+    [Schedule][]
+        
+### Remove a Schedule [DELETE]
 + Response 204

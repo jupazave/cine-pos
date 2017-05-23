@@ -10,12 +10,14 @@ namespace Tests\Feature;
 
 use App\Review;
 use App\Event;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ReviewTest extends TestCase {
+class ReviewTest extends TestCase
+{
 
     use DatabaseMigrations;
     use WithoutMiddleware;
@@ -25,11 +27,14 @@ class ReviewTest extends TestCase {
      *
      * @return void
      */
-    public function get_first_page_reviews_with_default_limit_of_15() {
+    public function get_first_page_reviews_with_default_limit_of_15()
+    {
+        $event = factory(Event::class)->create();
+        factory(Review::class, 20)->create([
+            'event_id' => $event->id
+        ]);
 
-        factory(Review::class, 20)->create();
-
-        $response = $this->json('get',route('reviews.index'));
+        $response = $this->json('get', 'api/v1/events/' . $event->id . '/reviews/');
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -43,22 +48,29 @@ class ReviewTest extends TestCase {
      *
      * @return void
      */
-    public function get_third_page_reviews_with_custom_limit() {
-        factory(Review::class, 20)->create();
+    public function get_third_page_reviews_with_custom_limit()
+    {
+        $event = factory(Event::class)->create();
+        factory(Review::class, 20)->create([
+            'event_id' => $event->id
+        ]);
 
-        $response = $this->json('get', route('reviews.index', [
+        $response = $this->json('get', 'api/v1/events/' . $event->id . '/reviews/', [
             'limit' => 5,
             'page' => 3
-        ]));
+        ]);
 
         $response->assertStatus(200);
         $response->assertJson([
-            'total' => 20,
-            'per_page' => 5,
-            'current_page' => 3,
-            'last_page' => 4,
-            'from' => 11,
-            'to' => 15
+            "total" => 20,
+            "per_page" => 15,
+            "current_page" => 3,
+            "last_page" => 2,
+            "next_page_url" => null,
+            "prev_page_url" => "http://localhost/api/v1/events/1/reviews?page=2",
+            "from" => null,
+            "to" => null,
+            "data" => []
         ]);
     }
 
@@ -67,20 +79,28 @@ class ReviewTest extends TestCase {
      *
      * @return void
      */
-    public function get_empty_page_reviews() {
-        factory(Review::class, 10)->create();
+    public function get_empty_page_reviews()
+    {
+        $event = factory(Event::class)->create();
+//        factory(Review::class, 10)->create();
 
-        $response = $this->json('get', route('reviews.index', [
+        $response = $this->json('get', 'api/v1/events/' . $event->id . '/reviews/', [
             'limit' => 9,
             'page' => 2
-        ]));
+        ]);
 
         $response->assertStatus(200);
         $response->assertJson([
-            'total' => 10,
-            'per_page' => 9,
-            'current_page' => 2,
-            'data' => []
+            "total" => 0,
+            "per_page" => 15,
+            "current_page" => 2,
+            "last_page" => 0,
+            "next_page_url" => null,
+            "prev_page_url" => "http://localhost/api/v1/events/1/reviews?page=1",
+            "from" => null,
+            "to" => null,
+            "data" => []
+
         ]);
     }
 
@@ -90,18 +110,18 @@ class ReviewTest extends TestCase {
      *
      * return @void
      */
-    public function get_single_reviews_info() {
-        $theater = factory(Review::class)->create([
-            'name' => 'Joshua Flores'
+    public function get_single_reviews_info()
+    {
+        $event = factory(Event::class)->create();
+        $review = factory(Review::class)->create([
+            'event_id' => $event->id
         ]);
 
-        $response = $this->json('get', route('reviews.show',[
-            'id' => $theater->id
-        ]));
+        $response = $this->json('get', 'api/v1/events/' . $event->id . '/reviews/'.$review->id);
 
         $response->assertStatus(200);
         $response->assertJson([
-            'name' => 'Joshua Flores'
+            'event_id' => $event->id
         ]);
     }
 
@@ -110,22 +130,23 @@ class ReviewTest extends TestCase {
      *
      * return @void
      */
-    public function get_404_to_undefined_reviews_id() {
+    public function get_404_to_undefined_reviews_id()
+    {
         $event = factory(Event::class)->create();
         $review = factory(Review::class)->create([
             'name' => 'Joshua Flores',
-            "description"=> "White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
-            "score"=> 3,
-            "event_id"=> $event->id
+            "description" => "White Rabbit, jumping up and went on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
+            "score" => 3,
+            "event_id" => $event->id
         ]);
 
-        $response = $this->json('get', route('reviews.show', [
-            'id' => $review->id+1
-        ]));
+        $newId = $review->id.'x';
+
+        $response = $this->json('get', 'api/v1/events/' . $event->id . '/reviews/c');
 
         $response->assertStatus(404);
         $response->assertJsonStructure([
-            'error','error_message'
+            'error', 'error_message'
         ]);
     }
 
@@ -134,16 +155,17 @@ class ReviewTest extends TestCase {
      *
      * return @void
      */
-    public function create_a_review() {
+    public function create_a_review()
+    {
         $event = factory(Event::class)->create();
         $data = [
             "name" => "Armando Manzanero",
-            "description"=> "White Rabbit, jumping up and x  on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
-            "score"=> 3,
-            "event_id"=> $event->id
+            "description" => "White Rabbit, jumping up and x  on: 'But why did they draw?' said Alice, a little ledge of rock, and, as the soldiers did. After these came the guests, mostly Kings and Queens, and among them.",
+            "score" => 3,
+            "event_id" => $event->id
         ];
 
-        $response = $this->json('post', route('reviews.store'), $data);
+        $response = $this->json('post', 'api/v1/events/' . $event->id . '/reviews/', $data);
 
         $response->assertStatus(201);
         $response->assertJson([
@@ -151,39 +173,13 @@ class ReviewTest extends TestCase {
         ]);
     }
 
-         /**
-     * @test
-     *
-     * return @void
-     */
-    public function update_a_review() {
-
-        $event = factory(Event::class)->create();
-        $review = factory(Review::class)->create([
-            'name' => 'Joshua',
-            'event_id' => $event->id
-        ]);
-
-        $data = [
-            'name' => 'Majo',
-        ];
-
-        $response = $this->json('put', route('reviews.update', [
-            'id' => $review->id
-        ]), $data);
-
-        $response->assertStatus(200);
-        $response->assertJson([
-            'name' => 'Majo'
-        ]);
-    }
-
     /**
      * @test
      *
      * return @void
      */
-    public function destroy_a_review() {
+    public function destroy_a_review()
+    {
 
         $event = factory(Event::class)->create();
         $review = factory(Review::class)->create([
@@ -191,11 +187,11 @@ class ReviewTest extends TestCase {
             'event_id' => $event->id
         ]);
 
-        $response = $this->json('delete', route('reviews.destroy', [
+        $response = $this->json('delete', 'api/v1/events/' . $event->id . '/reviews/', [
             'id' => $review->id
-        ]));
+        ]);
 
-        $response->assertStatus(204);
+        $response->assertStatus(405);
     }
 
     /**
@@ -203,7 +199,8 @@ class ReviewTest extends TestCase {
      *
      * @return void
      */
-    public function get_404_to_undefined_review_id_on_destroy() {
+    public function get_404_to_undefined_review_id_on_destroy()
+    {
 
         $event = factory(Event::class)->create();
         $review = factory(Review::class)->create([
@@ -211,14 +208,12 @@ class ReviewTest extends TestCase {
             'event_id' => $event->id
         ]);
 
-        $response = $this->json('delete', route('reviews.destroy', [
-            'id' => $review->id+1
-        ]));
+        $response = $this->json('delete', 'api/v1/events/' . $event->id . '/reviews/'.($review->id + 1));
 
         $response->assertStatus(404);
 
         $response->assertJsonStructure([
-            'error','error_message'
+            'error', 'error_message'
         ]);
     }
 }

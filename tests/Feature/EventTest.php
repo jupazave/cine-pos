@@ -208,5 +208,23 @@ class EventTest extends TestCase
         ]);
     }
 
+    private function createUser() {
+        $user = factory(User::class)->create([
+            'username' => 'usr',
+            "password" => bcrypt("secret")
+        ]);
 
+        return $user;
+    }
+
+    private function getHeaderToken() {
+        $data = [
+            "username" => "usr",
+            "password" => "secret",
+        ];
+
+        $response = $this->json('post', route('auth.login'), $data);
+        $response->assertStatus(200);
+        return $headers = ['HTTP_Authorization' => 'Bearer ' . $response->json()["token"]];
+    }
 }

@@ -23,7 +23,6 @@ class ReviewController extends Controller {
      * @return \Illuminate\Http\Review
      */
     public function index(Request $request, $event_id) {
-//        dd($event_id);
         $reviews = Review::where('event_id','=', $event_id)->paginate($request->query('limit'));
 
         return response()->json($reviews);
@@ -51,10 +50,6 @@ class ReviewController extends Controller {
         $review = Review::with('event')->find($id);
         if(!$review) {
             abort(404);
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
         }
         return response()->json($review);
     }

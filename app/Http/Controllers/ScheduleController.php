@@ -94,10 +94,7 @@ class ScheduleController extends Controller
     public function show($id) {
         $schedule = Schedule::with('event', 'theater')->find($id);
         if(!$schedule) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
         return response()->json($schedule);
     }
@@ -139,10 +136,7 @@ class ScheduleController extends Controller
     public function destroy($id) {
         $schedule = Schedule::destroy($id);
         if(!$schedule) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
 
         return response(null, 204);

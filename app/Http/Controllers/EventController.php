@@ -81,10 +81,7 @@ class EventController extends Controller
     public function destroy($id) {
         $event = Event::destroy($id);
         if(!$event) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
 
         return response(null, 204);

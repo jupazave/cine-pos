@@ -6,51 +6,44 @@ use App\Schedule;
 use App\Event;
 use App\Http\Requests\Event\CreateScheduleRequest;
 use App\Http\Requests\Event\UpdateScheduleRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DB;
 
 class ScheduleController extends Controller
 {
+    protected $category_id;
+    protected $limit;
+    protected $startDate;
+    protected $endDate;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $city = $request->query('city') || 'Merida';
-        $category_id = $request->query('category') || null;
-        $startDate = $request->query('start_date') || null;
-        $endDate = $request->query('end_date') || null;
+        $city = $request->query("city") | null;
+        $this->limit = $request->query('limit') | 15;
+        $this->category_id = $request->query("category") | null ;
+        $this->startDate = Carbon::createFromFormat('Y-m-d H:i:s', $request->query('start_date'))->toDateTimeString();
+        $this->endDate = Carbon::createFromFormat('Y-m-d H:i:s', $request->query('end_date'))->toDateTimeString();
 
-        // if ($category_id) {
-        //     $events = Event::where('category_id', $category_id)->get();
-        //     //dd($events);
+        $schedules = Schedule::where([
+            ['start_date', '>=', $this->startDate],
+            ['end_date', '<=', $this->endDate]
+        ])->whereHas('event', function($query) {
+            $query->where('category_id', $this->category_id);
+        })->with('event')->paginate($this->limit);
 
-        //     foreach ($events as $event ) {
-        //         foreach ($event->schedules as $schedule) {
-        //             dd($schedule->pivot);
-        //         }
-        //     }
+        /*dd($schedules);
+        if(!$this->category_id) {
 
+        } else {
+            $schedules = Schedule::whereHas('event', function($query) {
+                $query->where('category_id', $this->category_id);
+            })->with('event')->paginate($this->limit);
+        }*/
 
-        // }
-
-        $schedules = Schedule::with('event')->get();
-//dd($request->query());
-        $schedules->map(function ($schedule, $key) {
-            dd($category_id);
-            if($schedule->event->category_id === 3){
-                return $schedule;
-            } else {
-                
-            }
-        });
-
-        /*$events->map(function ($event, $key) {
-            $reviewsCount = $event->reviewsCount();
-            $event['reviewsCount'] =  $reviewsCount;
-            return $event;
-        });*/
         return response()->json($schedules);
     }
 

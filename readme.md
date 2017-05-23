@@ -140,6 +140,6 @@ Generando una carpeta `folder` en la raiz del proyecto en la que estara de maner
 
 Utilizar el modulo `xdebug` disminuye el rendimiento hasta 3 o 5 veces los programas como `composer` o `phpunit` razon por la cual el modulo esta desactivado por defecto, para poder desactivarlo de nuevo utilizar el siguiente comando
  
- ```bash
- sudo phpdismod xdebug
- ```
+```bash
+sudo phpdismod xdebug
+```

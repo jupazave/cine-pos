@@ -38,6 +38,7 @@ The API can answer with the following HTTP codes. Only 20x codes are successfull
 <tr><td>401 Unauthorized</td><td>Authentication failed.</td></tr>
 <tr><td>403 Forbidden</td><td>You don't have access to resource.</td></tr>
 <tr><td>404 Not Found</td><td>You're asking for something that doesn't exist.</td></tr>
+<tr><td>405 Method not allowed</td><td>You don't have access to this method.</td></tr>
 <tr><td>422 Unprocessable Entity</td><td> The server understands the content type of the request entity but there is a format error.</td></tr>
 <tr><td>500 Internal Server Error</td><td>Something went wrong. We are sorry, it is our fault and we will make our best to fix it!</td></tr>
 <tr><td>503 Temporary Unavailable</td><td>This response is typically returned when system is under maintenance. Maintenance reason and expected maintenance ent time are also returned in response. </td></tr>
@@ -163,12 +164,16 @@ These are the possible values of the _error_ field and their meaning:
 
 + Response 200 (application/json)
 
+    + Body
+
         {
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzY290Y2guaW8iLCJleHAiOjEzMDA4MTkzODAsIm5hbWUiOiJDaHJpcyBTZXZpbGxlamEiLCJhZG1pbiI6dHJ1ZX0.03f329983b86f7d9a9f5fef85305880101d5e302afafa20154d094b229f75773", 
             "expires_in": 10800
         }
 
 + Response 400 (application/json)
+
+    + Body
 
         {
             "error": "invalid_request",
@@ -177,6 +182,8 @@ These are the possible values of the _error_ field and their meaning:
 
 
 + Response 500 (application/json)
+
+    + Body
 
         {
             "error": ""
@@ -197,6 +204,7 @@ Collection of all Theaters
 
 + Response 200 (application/json)
 
+    + Body
         
         {
             "total": 5,
@@ -247,6 +255,24 @@ Collection of all Theaters
             ]
         }
 
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
++ Response 500 (application/json)
+    
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 ### Create a Theater [POST]
 + Request (application/json)
     + Headers 
@@ -293,9 +319,30 @@ Collection of all Theaters
         }
         
 + Response 422 (application/json)
+
+    + Body
+
         [
           "The name has already been taken."
         ]
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ## Theater [/theater/{id}]
 A single Theater object with all its details
@@ -342,8 +389,26 @@ A single Theater object with all its details
                 "error": "not_found",
                 "error_message": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update a Theater [PUT]
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### Update a Theater [PATCH]
 + Request (application/json)
     + Headers
     
@@ -369,9 +434,31 @@ A single Theater object with all its details
             }
     
 + Response 422 (application/json)
+
+    + Body
+
         [
           "The name has already been taken."
         ]
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ### Remove a Theater [DELETE]
 + Response 204
@@ -385,6 +472,33 @@ A single Theater object with all its details
                 "error_message": "The requested resource was not found"
             }
 
++ Response 405 (application/json)   
+
+    + Body
+    
+            { 
+                "error": "not_found",
+                "error_message": "You don't have access to this method"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 # Group Event
 
@@ -398,6 +512,8 @@ Collection of all Events of a theater
     + limit (optional, number, `10`) ... Number of results to be returned per page.
 
 + Response 200 (application/json)
+
+    + Body
 
         {
             "total": 5,
@@ -451,6 +567,25 @@ Collection of all Events of a theater
                 }
             ]
         }
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ### Create an Event [POST]
 + Request (application/json)
@@ -467,6 +602,8 @@ Collection of all Events of a theater
         }
 
 + Response 201 (application/json)
+
+    + Body
 
         {
             "id": 1, 
@@ -487,6 +624,25 @@ Collection of all Events of a theater
             "end_date": "2017-02-20 17:09:07",
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
+        }
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 ## Event [/events/{id}]
@@ -522,6 +678,25 @@ A single Event object with all its details
                 "updated_at": "2017-04-14 13:47:01"
             }
             
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+            
 ### Retrieve an Event [GET]
 
 + Response 200 (application/json)
@@ -536,8 +711,27 @@ A single Event object with all its details
                 "error": "not_found",
                 "error_description": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update an Event [PUT]
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### Update an Event [PATCH]
 + Request (application/json)
 
         {
@@ -553,9 +747,48 @@ A single Event object with all its details
 + Response 201 (application/json)
 
     [Event][]
+    
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
         
 ### Remove an Event [DELETE]
 + Response 204
+
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 
 # Group Reviews
 
@@ -569,6 +802,8 @@ Collection of all reviews of an event
     + limit (optional, number, `10`) ... Number of results to be returned per page.
 
 + Response 200 (application/json)
+
+    + Body
 
         {
             "total": 5,
@@ -601,6 +836,25 @@ Collection of all reviews of an event
             ]
         }
 
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 ### Create a Review [POST]
 + Request (application/json)
 
@@ -612,6 +866,8 @@ Collection of all reviews of an event
 
 + Response 201 (application/json)
 
+    + Body
+
         {
             "id": 1, 
             "event_id": 1,
@@ -620,6 +876,25 @@ Collection of all reviews of an event
             "description": "Excelente actuación"
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
+        }
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 ## Review [/event/{event_id}/review/{review_id}]
@@ -659,26 +934,49 @@ A single Review object with all its details
                 "error": "not_found",
                 "error_description": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update a Review [PUT]
-+ Request (application/json)
+    + Body
 
         {
-            "id": 1, 
-            "event_id": 1,
-            "score": 5,
-            "name":"Joshua Flores Tuz",
-            "description": "Excelente actuación"
-            "start_date": "2017-02-20 17:09:07",
-            "end_date": "2017-02-20 17:09:07"
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
         }
 
-+ Response 201 (application/json)
 
-    [Event][]
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
         
 ### Remove a Review [DELETE]
+Logged user must have rol admi
+
 + Response 204
+
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 # Group Categories
 
@@ -719,6 +1017,25 @@ Collection of all categories
                 }
             ]
         }
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
 
 ### Create a Category [POST]
 + Request (application/json)
@@ -729,12 +1046,33 @@ Collection of all categories
 
 + Response 201 (application/json)
 
+    + Body
+
         {
             "id": 1, 
             "name": "Regional",
             "description": "Fantasía",
             "created_at": "2017-02-01 17:09:07",
             "updated_at": "2017-04-14 13:47:01"
+        }
+        
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 ## Category [/category/{category_id}]
@@ -771,8 +1109,27 @@ A single Category object with all its details
                 "error": "not_found",
                 "error_description": "The requested resource was not found"
             }
+            
++ Response 400 (application/json)
 
-### Update a Category [PUT]
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+### Update a Category [PATCH]
 + Request (application/json)
 
         {
@@ -783,6 +1140,25 @@ A single Category object with all its details
 + Response 201 (application/json)
 
     [Category][]
+    
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
         
 ### Remove a Category [DELETE]
 + Response 204
@@ -832,6 +1208,25 @@ Collection of all Schedule of a theater
                     "updated_at": "2017-04-14 13:47:01"
                 }
             ]
+        }
+
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
         }
 
 ## Schedules Collection [/schedules/]
@@ -907,6 +1302,25 @@ Collection of all schedules
             ]
         }
 
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "invalid_request",
+            "error_description": "A required parameter is missing or the request is malformed"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 ### Create a Schedule [POST]
 + Request (application/json)
 
@@ -931,7 +1345,27 @@ Collection of all schedules
             "created_at": "2017-05-23 04:08:51",
         }
 
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "bad_request",
+            "error_description": "The schedule has a collision with existing schedule"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
 ## Schedule [/schedule/{schedule_id}]
+
 A single Schedule object with all its details
 
 + Parameters
@@ -1008,6 +1442,16 @@ A single Schedule object with all its details
                 "error_description": "The requested resource was not found"
             }
 
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+
 ### Update a Schedule [PUT]
 + Request (application/json)
 
@@ -1019,6 +1463,36 @@ A single Schedule object with all its details
 + Response 201 (application/json)
 
     [Schedule][]
+
++ Response 400 (application/json)
+
+    + Body
+
+        {
+            "error": "bad_request",
+            "error_description": "The schedule has a collision with existing schedule"
+        }
+
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }
+
+
         
 ### Remove a Schedule [DELETE]
 + Response 204
+
++ Response 500 (application/json)
+
+    + Body
+
+        {
+            "error": ""
+            "error_description": "an error occurred on the server"
+        }

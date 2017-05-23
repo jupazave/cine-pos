@@ -177,7 +177,7 @@ class ScheduleTest extends TestCase
         $response->assertJson([
             'stage' => 'Salón Imperial'
         ]);
-    }i
+    }
 
     /**
      * @test

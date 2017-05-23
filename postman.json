@@ -125,7 +125,7 @@
 				{
 					"name": "Destroy Event",
 					"request": {
-						"url": "http://cinepos.app/api/v1/events/10",
+						"url": "http://cinepos.app/api/v1/events/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -306,6 +306,23 @@
 					"response": []
 				},
 				{
+					"name": "Index Schedule [category, dates]",
+					"request": {
+						"url": "http://cinepos.app/api/v1/schedules?category=14&start_date=2017-04-23+08:40:51&end_date=2017-04-28+10:40:51",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJpc3MiOiJodHRwOlwvXC9jaW5lcG9zLmFwcFwvYXBpXC92MVwvYXV0aFwvc2lnbnVwIiwiaWF0IjoxNDk1NDg1Njc1LCJleHAiOjE0OTYwOTA0NzUsIm5iZiI6MTQ5NTQ4NTY3NSwianRpIjoiRFBrMU9yTHFhS0lqczc3eiJ9.nptEZemP67-XiMn4RDN0kXFAXSUhbeqLW5xdJ6FSFvU",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Show schedule",
 					"request": {
 						"url": "http://cinepos.app/api/v1/schedules/103",
@@ -351,7 +368,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"event_id\": 1,\n    \"theater_id\": 2,\n    \"stage\": \"Salón Principal\",\n    \"start_date\": \"2017-05-22 23:09:07\",\n    \"end_date\": \"2017-05-22 23:09:09\"\n}"
+							"raw": "{\n    \"event_id\": 2,\n    \"theater_id\": 2,\n    \"stage\": \"Salón Principal\",\n    \"start_date\": \"2017-09-24 20:09:07\",\n    \"end_date\": \"2017-09-24 22:09:09\"\n}"
 						},
 						"description": ""
 					},
@@ -360,7 +377,7 @@
 				{
 					"name": "Update Schedule",
 					"request": {
-						"url": "http://cinepos.app/api/v1/schedules/103",
+						"url": "http://cinepos.app/api/v1/schedules/90",
 						"method": "PUT",
 						"header": [
 							{
@@ -381,7 +398,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"event_id\": 1,\n    \"theater_id\": 2,\n    \"stage\": \"Salón Principal\",\n    \"start_date\": \"2017-05-22 23:09:07\",\n    \"end_date\": \"2017-05-22 23:09:09\"\n}"
+							"raw": "{\n    \"event_id\": 2,\n    \"theater_id\": 2,\n    \"stage\": \"Salón Principal\",\n    \"start_date\": \"2017-09-24 21:09:07\",\n    \"end_date\": \"2017-09-24 21:09:10\"\n}"
 						},
 						"description": ""
 					},

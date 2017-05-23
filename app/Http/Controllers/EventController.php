@@ -62,8 +62,12 @@ class EventController extends Controller
      * @param  \App\Theater  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, $id)
     {
+        $event = Event::find($id);
+        if(!$event) {
+            abort(404);
+        }
         $event->fill($request->all())->save();
         return response()->json($event, 200);
     }
@@ -77,10 +81,7 @@ class EventController extends Controller
     public function destroy($id) {
         $event = Event::destroy($id);
         if(!$event) {
-            return response()->json([
-                "error" => "not_found",
-                "error_message" => "The requested resource was not found"
-            ], 404);
+            abort(404);
         }
 
         return response(null, 204);

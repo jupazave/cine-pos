@@ -18,13 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::resource('theaters', 'TheaterController');
-    Route::resource('events', 'EventController');
-    Route::resource('categories', 'CategoryController');
-    Route::resource('reviews', 'ReviewController');
-    Route::resource('schedules', 'ScheduleController');
 
-    Route::get('theaters/:theater_id/schedules', ['as' => 'theaters.schedules', 'uses' => 'TheaterController@getSchedules']);
+
+    Route::group(['middleware' => 'jwt.auth'], function () {
+        Route::resource('theaters', 'TheaterController');
+        Route::resource('events', 'EventController');
+        Route::resource('categories', 'CategoryController');
+        Route::group(['prefix' => 'events/{event_id}'], function () {
+            Route::resource('reviews', 'ReviewController');
+        });
+        Route::resource('schedules', 'ScheduleController');
+
+        Route::get('theaters/:theater_id/schedules', ['as' => 'theaters.schedules', 'uses' => 'TheaterController@getSchedules']);
+    });
 
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);

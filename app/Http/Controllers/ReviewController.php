@@ -12,6 +12,8 @@ use App\Http\Requests\Review\CreateReviewRequest;
 use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Review;
 use Illuminate\Http\Request;
+use JWTAuth;
+
 
 class ReviewController extends Controller {
 
@@ -19,9 +21,10 @@ class ReviewController extends Controller {
      * Display the reviews list.
      * @return \Illuminate\Http\Review
      */
-    public function index(Request $request)
-    {
-        $reviews = Review::paginate($request->query('limit'));
+    public function index(Request $request, $event_id) {
+//        dd($event_id);
+        $reviews = Review::where('event_id','=', $event_id)->paginate($request->query('limit'));
+
         return response()->json($reviews);
     }
 
@@ -55,25 +58,18 @@ class ReviewController extends Controller {
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  UpdateReviewRequest  $request
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateReviewRequest $request, Review $review)
-    {
-        $review->fill($request->all())->save();
-        return response()->json($review, 200);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Review  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if($user->role != 'admin') {
+            return response('You don\'t have access to this resource', 403);
+        }
+
         $review = Review::destroy($id);
         if(!$review) {
             return response()->json([

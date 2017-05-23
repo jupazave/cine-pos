@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\Http\Requests\Review\CreateReviewRequest;
 use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Review;
@@ -63,13 +64,27 @@ class ReviewController extends Controller {
      * @param  \App\Review  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        $user = JWTAuth::parseToken()->authenticate();
+    public function destroy(Request $request, $event_id, $id) {
+        /*dd($request->attributes->get('user'));*/
 
-        if($user->role != 'admin') {
-            return response('You don\'t have access to this resource', 403);
+        $user = $this->getUser($request);
+
+
+
+        $event = Event::with('reviews')->find($event_id);
+
+        if($user->id != $event->user_id) {
+            return response()->json([
+                "error" => "forbidden",
+                "error_message" => "The requested resource was not found"
+            ], 403);
         }
+        dd($user->id, $event->user_id);
 
+
+        dd($event);
+
+        dd($event_id, $id);
         $review = Review::destroy($id);
         if(!$review) {
             return response()->json([
@@ -81,4 +96,11 @@ class ReviewController extends Controller {
         return response(null, 204);
     }
 
+    private function getUser($request) {
+        $user = null;
+        if($request->attributes->get('user')) {
+            $user = $request->attributes->get('user');
+        }
+        return $user;
+    }
 }

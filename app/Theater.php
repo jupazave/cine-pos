@@ -12,7 +12,7 @@ class Theater extends Model
     }
 
     public function schedules(){
-        return $this->belongsToMany('App\Event', 'schedules');
+        return $this->belongsToMany('App\Event', 'schedules')->withPivot('id', 'stage', 'start_date', 'end_date')->withTimestamps();
     }
     //
     protected $guarded = [];

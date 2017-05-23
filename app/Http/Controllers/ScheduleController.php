@@ -20,27 +20,39 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $city = $request->query("city") | null;
         $this->limit = $request->query('limit') | 15;
         $this->category_id = $request->query("category") | null ;
-        $this->startDate = Carbon::createFromFormat('Y-m-d H:i:s', $request->query('start_date'))->toDateTimeString();
-        $this->endDate = Carbon::createFromFormat('Y-m-d H:i:s', $request->query('end_date'))->toDateTimeString();
+        $this->startDate = $request->query('start_date') ? Carbon::createFromFormat('Y-m-d H:i:s', $request->query('start_date'))->toDateTimeString() : null;
+        $this->endDate = $request->query('end_date') ? Carbon::createFromFormat('Y-m-d H:i:s', $request->query('end_date'))->toDateTimeString() : null;
 
-        $schedules = Schedule::where([
-            ['start_date', '>=', $this->startDate],
-            ['end_date', '<=', $this->endDate]
-        ])->whereHas('event', function($query) {
-            $query->where('category_id', $this->category_id);
-        })->with('event')->paginate($this->limit);
+        if($this->category_id !== null && $this->startDate !== null && $this->endDate !== null) {
+            $schedules = Schedule::where([
+                ['start_date', '>=', $this->startDate],
+                ['end_date', '<=', $this->endDate]])
+                ->whereHas('event', function($query) {
+                    $query->where('category_id', $this->category_id);
+                })
+                ->with('event')
+                ->paginate($this->limit);
+        } else if ($this->startDate !== null && $this->endDate !== null) {
+            $schedules = Schedule::where([
+                ['start_date', '>=', $this->startDate],
+                ['end_date', '<=', $this->endDate]])
+                ->with('event')
+                ->paginate($this->limit);
 
-        /*dd($schedules);
-        if(!$this->category_id) {
-
-        } else {
+        } else if($this->category_id !== null) {
             $schedules = Schedule::whereHas('event', function($query) {
-                $query->where('category_id', $this->category_id);
-            })->with('event')->paginate($this->limit);
-        }*/
+                    $query->where('category_id', $this->category_id);
+                })
+                ->with('event')
+                ->paginate($this->limit);
+        } else {
+            $schedules = Schedule::where([
+                ['start_date', '>=', Carbon::now()->toDateTimeString()]])
+                ->with('event')
+                ->paginate($this->limit);
+        }
 
         return response()->json($schedules);
     }

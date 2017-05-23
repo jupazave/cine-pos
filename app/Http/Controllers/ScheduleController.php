@@ -14,6 +14,7 @@ class ScheduleController extends Controller
     protected $limit;
     protected $startDate;
     protected $endDate;
+    protected $request;
     /**
      * Display a listing of the resource.
      *
@@ -64,9 +65,24 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CreateScheduleRequest $request) {
+        $this->request = $request;
         $schedule = new Schedule($request->all());
-        $schedule->save();
-        return response()->json($schedule, 201);
+
+        $schedulesOfSameTheater = Schedule::whereHas('theater', function($query) {
+            $query->where('id', $this->request->input('theater_id'));
+        })->get();
+        
+        $flag = $this->checkCollisionDateTimes($request, $schedulesOfSameTheater);
+
+        if($flag){
+            $schedule->save();
+            return response()->json($schedule, 201);
+        } else {
+            return response()->json([
+                "error" => "bad_request",
+                "error_message" => "The schedule has a collision whith existing schedule"
+            ], 400);
+        }
     }
 
     /**
@@ -95,8 +111,23 @@ class ScheduleController extends Controller
      */
     public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
-        $schedule->fill($request->all())->save();
-        return response()->json($schedule, 200);
+        $this->request = $request;
+        
+        $schedulesOfSameTheater = Schedule::whereHas('theater', function($query) {
+            $query->where('id', $this->request->input('theater_id'));
+        })->get();
+        
+        $flag = $this->checkCollisionDateTimes($request, $schedulesOfSameTheater);
+
+        if($flag){
+            $schedule->fill($request->all())->save();
+            return response()->json($schedule, 200);
+        } else {
+            return response()->json([
+                "error" => "bad_request",
+                "error_message" => "The schedule has a collision whith existing schedule"
+            ], 400);
+        }
     }
 
     /**
@@ -115,5 +146,16 @@ class ScheduleController extends Controller
         }
 
         return response(null, 204);
+    }
+
+    private function checkCollisionDateTimes($request, $schedules) {
+        $flag = true;
+        foreach ($schedules as $storedSchedule) {
+            if ($storedSchedule->end_date < $request->input('start_date') || $storedSchedule->start_date > $request->input('end_date')) {
+            } else {
+                $flag = false;
+            }
+        }
+        return $flag;
     }
 }
